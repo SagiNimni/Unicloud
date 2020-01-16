@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1799aa4c-6774-4554-aacc-4aa681b352f9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsManagement/VirtualDisk.py" beforeDir="false" afterPath="$PROJECT_DIR$/WindowsManagement/VirtualDisk.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,6 +98,18 @@
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="12" />
+          <entry key="txt" value="29" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="29" />
+          <entry key="Python" value="12" />
+        </counts>
+      </usages-collector>
     </session>
   </component>
   <component name="FavoritesManager">
@@ -108,8 +120,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WindowsManagement/VirtualDisk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+            <state relative-caret-position="85">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
                 <element signature="e#447#1917#0" />
@@ -124,7 +136,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WrapperAPI/CloudsAPI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
+            <state relative-caret-position="1377">
               <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
             </state>
           </provider>
@@ -133,8 +145,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/executables/Download EXE/download.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="340">
+              <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -203,10 +215,10 @@
         <option value="$PROJECT_DIR$/executables/h.ipynb" />
         <option value="$PROJECT_DIR$/executables/enums.py" />
         <option value="$PROJECT_DIR$/executables/File EXE/download.py" />
-        <option value="$PROJECT_DIR$/WindowsManagement/VirtualDisk.py" />
         <option value="$PROJECT_DIR$/executables/download.py" />
         <option value="$PROJECT_DIR$/executables/Download EXE/download.py" />
         <option value="$PROJECT_DIR$/WrapperAPI/CloudsAPI.py" />
+        <option value="$PROJECT_DIR$/WindowsManagement/VirtualDisk.py" />
       </list>
     </option>
   </component>
@@ -232,7 +244,7 @@
             <path>
               <item name="source" type="b2602c69:ProjectViewProjectNode" />
               <item name="source" type="462c0819:PsiDirectoryNode" />
-              <item name="executables" type="462c0819:PsiDirectoryNode" />
+              <item name="WindowsManagement" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -247,18 +259,18 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables" />
+      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables" />
+      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables\Download EXE" />
+      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables\File EXE" />
+      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables\directory" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\nimni\PycharmProjects\UniCloud\WrapperAPI\Google Drive Auth" />
       <recent name="C:\Users\nimni\PycharmProjects\UniCloud\configuration" />
       <recent name="C:\Users\nimni\PycharmProjects\UniCloud\WindowsManagement\disk scripts" />
       <recent name="C:\Users\nimni\PycharmProjects\UniCloud\Wrapper API" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables" />
-      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables\Download EXE" />
-      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables\File EXE" />
-      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\executables\directory" />
-      <recent name="C:\Users\nimni\PycharmProjects\UniCloud\configuration" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -407,6 +419,14 @@
       <option name="presentableId" value="Default" />
       <updated>1572018328991</updated>
     </task>
+    <task id="LOCAL-00001" summary="xml file for pycharm">
+      <created>1579184595554</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579184595554</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -420,6 +440,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49676377" visible="true" weight="0.11666667" />
       <window_info id="Structure" order="1" sideWeight="0.5008375" side_tool="true" weight="0.13224447" />
@@ -442,6 +463,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="xml file for pycharm" />
+    <option name="LAST_COMMIT_MESSAGE" value="xml file for pycharm" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
@@ -658,10 +683,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WrapperAPI/CloudsAPI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1377">
+          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/WindowsManagement/VirtualDisk.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
             <element signature="e#447#1917#0" />
@@ -672,17 +704,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WrapperAPI/CloudsAPI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/executables/Download EXE/download.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="340">
+          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
