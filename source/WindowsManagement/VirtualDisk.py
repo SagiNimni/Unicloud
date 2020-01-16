@@ -10,7 +10,7 @@ class MappedDrive:
     This class is responsible for the mapped drive that will store the data of Unicloud.
     It includes build and delete function for the user.
     """
-    PSUBST_PATH = "C:/Users/nimni/PycharmProjects/UniCloud/WindowsManagement/diskScripts/"
+    PSUBST_PATH = "~/PycharmProjects/UniCloud-VC/source/WindowsManagement/diskScripts/"
 
     def __init__(self, letter: str, drive_directory: str, name):
         """
