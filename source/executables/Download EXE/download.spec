@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['download.py'],
-             pathex=['C:\\Users\\nimni\\PycharmProjects\\UniCloud\\executables'],
+             pathex=['C:\\Users\\nimni\\PycharmProjects\\Unicloud-VC\\source\\executables'],
              binaries=[],
              datas=[],
              hiddenimports=[],
