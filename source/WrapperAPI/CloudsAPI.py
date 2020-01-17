@@ -325,6 +325,7 @@ class MegaUploadCloud:
         files = subprocess.getoutput(cmd_line)
         print(files)
         utility.enable_print()
+        files = files.split('\n')
         return files
 
     def upload(self, local_path, remote_path=None):
@@ -363,7 +364,6 @@ class MegaUploadCloud:
 
 def main():
     dropbox_service = DropboxCloud("q8AOvG028RAAAAAAAAAARl4cbDhkbW1k0CX9w09-9zce7Aoheti6kRSqXiOaFfeU")
-    dropbox_service.download_file("/blender.zip", "H:")
 
 
 if __name__ == '__main__':

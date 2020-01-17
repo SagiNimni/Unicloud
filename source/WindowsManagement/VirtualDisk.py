@@ -91,7 +91,7 @@ class MappedDrive:
         key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, subkey_path, 0, winreg.KEY_SET_VALUE)
         winreg.SetValueEx(key, 'AppliesTo', 0, winreg.REG_SZ, self.letter)
         winreg.SetValueEx(key, 'Icon', 0, winreg.REG_SZ, menu_icon)
-        winreg.SetValueEx(key, 'SubCommands', 0, winreg.REG_SZ, "download; storage")
+        winreg.SetValueEx(key, 'SubCommands', 0, winreg.REG_SZ, "download")
         winreg.SetValueEx(key, 'Position', 0, winreg.REG_SZ, "Top")
 
         # create sub commands
@@ -106,4 +106,3 @@ class MappedDrive:
 
         make_sub_command("download", r'"C:\Users\nimni\PycharmProjects\UniCloud\executables\Download EXE\dist\download\
                             download.exe" "%1"', 'download.ico')
-        make_sub_command('storage', 'cmd.exe', 'storage.ico')
