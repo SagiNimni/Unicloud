@@ -37,6 +37,9 @@
   ('pyi_rth_multiprocessing',
    'c:\\python\\python_64bit\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_multiprocessing.py',
    'PYSOURCE'),
+  ('pyi_rth__tkinter',
+   'c:\\python\\python_64bit\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth__tkinter.py',
+   'PYSOURCE'),
   ('download',
    'C:\\Users\\nimni\\PycharmProjects\\Unicloud-VC\\source\\executables\\download.py',
    'PYSOURCE'),
@@ -46,7 +49,7 @@
  [],
  False,
  False,
- 1579186651,
+ 1579866886,
  [('runw.exe',
    'c:\\python\\python_64bit\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\runw.exe',
    'EXECUTABLE')])
