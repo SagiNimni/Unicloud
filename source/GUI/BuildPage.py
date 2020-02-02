@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
+import configparser as cp
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from WindowsManagement.VirtualDisk import MappedDrive
@@ -64,6 +64,7 @@ class Ui_Form(object):
         self.CreateBtn = QtWidgets.QPushButton(Form)
         self.CreateBtn.setGeometry(QtCore.QRect(440, 300, 101, 41))
         self.CreateBtn.setObjectName("CreateBtn")
+        Form.setWindowModality(QtCore.Qt.ApplicationModal)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -104,8 +105,28 @@ class Ui_Form(object):
         button_no = box.button(QMessageBox.No)
         button_no.setText('Cancel')
         box.exec_()
-        if box.clickedButton() == button_yes:
-            MappedDrive(self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText())
+        letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
+        if dr != '' and name != '':
+            if box.clickedButton() == button_yes:
+                config = cp.ConfigParser()
+                config.read('mappedDrives.ini')
+                section = letter + name
+                sections = config.sections()
+                if section not in sections:
+                    MappedDrive(letter, dr, name)
+                    config.add_section(section)
+                    with open("mappedDrives.ini", "w+") as f:
+                        config.write(f)
+        else:
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle('Missing Arguments')
+            box.setText('Please fill all the text boxes')
+            box.setStandardButtons(QMessageBox.Ok)
+            box.setDefaultButton(QMessageBox.Ok)
+            button = box.button(QMessageBox.Ok)
+            button.setText('Close')
+            box.exec_()
 
 
 if __name__ == "__main__":

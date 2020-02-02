@@ -1,0 +1,243 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'C:\Users\nimni\PycharmProjects\Unicloud-VC\source\GUI\ui scripts\addAccount.ui'
+#
+# Created by: PyQt5 UI code generator 5.13.0
+#
+# WARNING! All changes made in this file will be lost!
+
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
+import os
+import shutil
+import configparser as cp
+from executables.enums import Cloud
+from GUI.errors import BlankSpaceError
+
+
+class Ui_Form(object):
+    def setupUi(self, Form, currentDrive: list):
+        self.currentDrive = currentDrive
+        Form.setObjectName("Form")
+        Form.resize(562, 415)
+        self.typeEdit = QtWidgets.QComboBox(Form)
+        self.typeEdit.setGeometry(QtCore.QRect(130, 80, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.typeEdit.setFont(font)
+        self.typeEdit.setObjectName("typeEdit")
+        self.typeEdit.addItem("")
+        self.typeEdit.addItem("")
+        self.typeEdit.addItem("")
+        self.typeLbl = QtWidgets.QLabel(Form)
+        self.typeLbl.setGeometry(QtCore.QRect(30, 80, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.typeLbl.setFont(font)
+        self.typeLbl.setObjectName("typeLbl")
+        self.usernameLbl = QtWidgets.QLabel(Form)
+        self.usernameLbl.setEnabled(True)
+        self.usernameLbl.setGeometry(QtCore.QRect(30, 180, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.usernameLbl.setFont(font)
+        self.usernameLbl.setObjectName("usernameLbl")
+        self.usernameEdit = QtWidgets.QTextEdit(Form)
+        self.usernameEdit.setEnabled(True)
+        self.usernameEdit.setGeometry(QtCore.QRect(130, 180, 201, 31))
+        self.usernameEdit.setObjectName("usernameEdit")
+        self.browseBtn = QtWidgets.QToolButton(Form)
+        self.browseBtn.setEnabled(True)
+        self.browseBtn.setGeometry(QtCore.QRect(330, 240, 25, 19))
+        self.browseBtn.setObjectName("browseBtn")
+        self.credantialsEdit = QtWidgets.QTextEdit(Form)
+        self.credantialsEdit.setEnabled(True)
+        self.credantialsEdit.setGeometry(QtCore.QRect(130, 230, 201, 31))
+        self.credantialsEdit.setObjectName("credantialsEdit")
+        self.credantialsLbl = QtWidgets.QLabel(Form)
+        self.credantialsLbl.setEnabled(True)
+        self.credantialsLbl.setGeometry(QtCore.QRect(30, 230, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.credantialsLbl.setFont(font)
+        self.credantialsLbl.setObjectName("credantialsLbl")
+        self.passwordLbl = QtWidgets.QLabel(Form)
+        self.passwordLbl.setGeometry(QtCore.QRect(30, 230, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.passwordLbl.setFont(font)
+        self.passwordLbl.setObjectName("passwordLbl")
+        self.passwordLbl.close()
+        self.doneBtn = QtWidgets.QPushButton(Form)
+        self.doneBtn.setGeometry(QtCore.QRect(440, 360, 101, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.doneBtn.setFont(font)
+        self.doneBtn.setObjectName("doneBtn")
+        self.cancelBtn = QtWidgets.QPushButton(Form)
+        self.cancelBtn.setGeometry(QtCore.QRect(320, 360, 101, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.cancelBtn.setFont(font)
+        self.cancelBtn.setObjectName("cancelBtn")
+        self.tokenLbl = QtWidgets.QLabel(Form)
+        self.tokenLbl.setGeometry(QtCore.QRect(30, 230, 91, 31))
+        self.tokenLbl.close()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.tokenLbl.setFont(font)
+        self.tokenLbl.setObjectName("tokenLbl")
+        self.nameLbl = QtWidgets.QLabel(Form)
+        self.nameLbl.setEnabled(True)
+        self.nameLbl.setGeometry(QtCore.QRect(20, 280, 101, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.nameLbl.setFont(font)
+        self.nameLbl.setObjectName("nameLbl")
+        self.nameEdit = QtWidgets.QTextEdit(Form)
+        self.nameEdit.setEnabled(True)
+        self.nameEdit.setGeometry(QtCore.QRect(130, 280, 201, 31))
+        Form.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+        self.browseBtn.clicked.connect(self.browseForPath)
+        self.typeEdit.currentTextChanged.connect(self.changeCloudType)
+        self.doneBtn.clicked.connect(self.addAccountApproved)
+        self.doneBtn.clicked.connect(Form.close)
+        self.cancelBtn.clicked.connect(Form.close)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.typeEdit.setItemText(0, _translate("Form", "Google Drive"))
+        self.typeEdit.setItemText(1, _translate("Form", "Dropbox"))
+        self.typeEdit.setItemText(2, _translate("Form", "Mega Upload"))
+        self.typeLbl.setText(_translate("Form", "Cloud Type:"))
+        self.usernameLbl.setText(_translate("Form", "Username:"))
+        self.browseBtn.setText(_translate("Form", "..."))
+        self.credantialsLbl.setText(_translate("Form", "Credantials:"))
+        self.passwordLbl.setText(_translate("Form", "Password:"))
+        self.doneBtn.setText(_translate("Form", "Done"))
+        self.cancelBtn.setText(_translate("Form", "Cancel"))
+        self.tokenLbl.setText(_translate("Form", "Token Key:"))
+        self.nameLbl.setText(_translate("Form", "Folder Name:"))
+
+    def changeCloudType(self):
+        def check_previous_type():
+            if self.passwordLbl.isVisible():
+                return "Mega Upload"
+            elif self.credantialsLbl.isVisible():
+                return "Google Drive"
+            elif self.tokenLbl.isVisible():
+                return "Dropbox"
+
+        current_type = self.typeEdit.currentText()
+        previous_type = check_previous_type()
+        if previous_type == "Mega Upload":
+            self.passwordLbl.close()
+            if current_type == "Google Drive":
+                self.credantialsLbl.show()
+                self.browseBtn.show()
+            elif current_type == "Dropbox":
+                self.tokenLbl.show()
+        elif previous_type == "Google Drive":
+            self.browseBtn.close()
+            self.credantialsLbl.close()
+            if current_type == "Mega Upload":
+                self.passwordLbl.show()
+            elif current_type == "Dropbox":
+                self.tokenLbl.show()
+        elif previous_type == "Dropbox":
+            self.tokenLbl.close()
+            if current_type == "Google Drive":
+                self.credantialsLbl.show()
+                self.browseBtn.show()
+            elif current_type == "Mega Upload":
+                self.passwordLbl.show()
+
+    def browseForPath(self):
+        cred_dir, _ = QtWidgets.QFileDialog.getOpenFileUrl(None, 'Inset Credantials', '', 'credantials files (*.json)')
+        self.credantialsEdit.setPlainText(cred_dir.path()[1:])
+
+    def addAccountApproved(self):
+        try:
+            if self.credantialsEdit.toPlainText() == '':
+                raise BlankSpaceError
+            if self.usernameEdit.toPlainText() == '':
+                raise BlankSpaceError
+            if self.nameEdit.toPlainText() == '':
+                raise BlankSpaceError
+            account_directory = self.currentDrive[0] + "/" + self.nameEdit.toPlainText()
+            os.mkdir(account_directory)
+            config = cp.ConfigParser()
+            config.add_section("accountSettings")
+            with open(account_directory + "/account.ini", 'w+') as f:
+                if Cloud.Dropbox.name == self.typeEdit.currentText().replace(' ', ''):
+                    config.set("accountSettings", "type", Cloud.Dropbox.value)
+                    config.set("accountSettings", "tokenKey", self.credantialsEdit.toPlainText())
+                    config.set("accountSettings", "username", self.usernameEdit.toPlainText())
+                    config.write(f)
+                elif Cloud.GoogleDrive.name == self.typeEdit.currentText().replace(' ', ''):
+                    credentials_directory = account_directory + "/credentials.json"
+                    config.set("accountSettings", "type", Cloud.GoogleDrive.value)
+                    config.set("accountSettings", "credentials", credentials_directory)
+                    config.set("accountSettings", "username", self.usernameEdit.toPlainText())
+                    config.write(f)
+                    shutil.move(self.credantialsEdit.toPlainText(), credentials_directory)
+                    os.system("attrib +h {0}".format(credentials_directory))
+                elif Cloud.MegaUpload.name == self.typeEdit.currentText().replace(' ', ''):
+                    config.set("accountSettings", "type", Cloud.MegaUpload.value)
+                    config.set("accountSettings", "password", self.credantialsEdit.toPlainText())
+                    config.set("accountSettings", "username", self.usernameEdit.toPlainText())
+                    config.write(f)
+                f.close()
+                os.system("attrib +h {0}".format(account_directory + "/account.ini"))
+        except BlankSpaceError:
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle('Missing Arguments')
+            box.setText('Please fill all the text boxes')
+            box.setStandardButtons(QMessageBox.Ok)
+            box.setDefaultButton(QMessageBox.Ok)
+            button = box.button(QMessageBox.Ok)
+            button.setText('Close')
+            box.exec_()
+            return
+        except FileNotFoundError:
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle('credentials error')
+            box.setText("The credntials path you entered doesn't exist")
+            box.setStandardButtons(QMessageBox.Ok)
+            box.setDefaultButton(QMessageBox.Ok)
+            button = box.button(QMessageBox.Ok)
+            button.setText('Close')
+            box.exec_()
+            return
+
+        config = cp.ConfigParser()
+        config.read("mappedDrives.ini")
+        section = self.currentDrive[0] + self.currentDrive[1]
+        key = None
+        try:
+            for i in range(1, 10):
+                key = 'account' + str(i)
+                config[section][key]
+        except KeyError:
+            config.set(section, key, account_directory + "/account.ini")
+            with open("mappedDrives.ini", 'w+') as f:
+                config.write(f)
+                f.close()
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())

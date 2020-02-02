@@ -1,0 +1,2 @@
+class BlankSpaceError(Exception):
+    pass

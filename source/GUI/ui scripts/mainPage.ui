@@ -17,7 +17,7 @@
    <property name="styleSheet">
     <string notr="true">background-image: url(:/newPrefix/background.jpg);</string>
    </property>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="drivesList">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -77,7 +77,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="editBtn">
     <property name="geometry">
      <rect>
       <x>80</x>
