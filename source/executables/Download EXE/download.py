@@ -17,20 +17,27 @@ def main(directory):
         config.read(prop_path)
         properties = {'type': config['DriveSettings']['type'], 'path': config['DriveSettings']['path']}
         try:
+            config = cp.ConfigParser()
+            root_folder = directory.split('\\', 2)[0] + "\\" + directory.split("\\", 2)[1]
+            config.read(root_folder + "\\account.ini")
             if properties['type'] == Cloud.GoogleDrive.value:
+                account_properties = {"credentials": config["accountSettings"]["credentials"]}
                 shutil.rmtree(directory, ignore_errors=False, onerror=handle_remove_readonly)
                 directory, tail = ntpath.split(directory)
-                service = GoogleDriveCloud()
+                service = GoogleDriveCloud(account_properties['credentials'])
                 service.download_file(properties['path'], directory + '\\')
             elif properties['type'] == Cloud.MegaUpload.value:
+                account_properties = {'username': config["accountSettings"]["username"],
+                                      'password': config["accountSettings"]["password"]}
                 shutil.rmtree(directory, ignore_errors=False, onerror=handle_remove_readonly)
                 directory, tail = ntpath.split(directory)
-                service = MegaUploadCloud("nimni.project@gmail.com", "0522724447")
+                service = MegaUploadCloud(account_properties['username'], account_properties['password'])
                 service.download(properties['path'], directory)
             elif properties['type'] == Cloud.Dropbox.value:
+                account_properties = {'token key': config["accountSettings"]["tokenkey"]}
                 shutil.rmtree(directory, ignore_errors=False, onerror=handle_remove_readonly)
                 directory, tail = ntpath.split(directory)
-                service = DropboxCloud("q8AOvG028RAAAAAAAAAARl4cbDhkbW1k0CX9w09-9zce7Aoheti6kRSqXiOaFfeU")
+                service = DropboxCloud(account_properties['token key'])
                 service.download_file(properties['path'], directory)
         except Exception as e:
             root = tkinter.Tk()
