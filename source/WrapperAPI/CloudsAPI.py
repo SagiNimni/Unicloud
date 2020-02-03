@@ -15,6 +15,7 @@ import dropbox.files
 from WrapperAPI import convert
 from WrapperAPI import utility
 from WrapperAPI import errors as e
+from tkinter import ttk
 
 
 class DropboxCloud:  # TODO implement delete functions
@@ -139,6 +140,8 @@ class GoogleDriveCloud:
                 flow = InstalledAppFlow.from_client_secrets_file(credentials, self.SCOPES)
                 creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
+            if os.path.exists(path + '/token.pickle'):
+                os.remove(path + '/token.pickle')
             with open(path + '/token.pickle', 'wb') as token:
                 pickle.dump(creds, token)
                 os.system("attrib +h {0}/token.pickle".format(path))
@@ -268,12 +271,20 @@ class GoogleDriveCloud:
         media = self.drive_service.files().get_media(fileId=file_id)
         fh = io.BytesIO()
         downloader = MediaIoBaseDownload(fh, media, self.CHUNK_SIZE)
+
+        progress_bar = ttk.Progressbar(orient='horizontal', length=286, mode='determinate')
+        progress_bar.grid(column=0, row=1, pady=10)
+        progress_bar['maximum'] = 100
+        progress_bar.start()
         done = False
         while done is False:
             status, done = downloader.next_chunk()
-            print("Download %d%%." % int(status.progress() * 100))
+            progress_bar['value'] = int(status.progress() * 100)
+            progress_bar.update()
+            print("Downloaded: %d%%." % int(status.progress()*100))
         print("Download completed")
         with open(directory + tail, 'wb') as out:
+            fh.seek(0)
             out.write(fh.read())
 
     def download_folder(self):
@@ -363,9 +374,3 @@ class MegaUploadCloud:
         used_space = {"GB": gb, "MB": mb}
 
 
-def main():
-    dropbox_service = DropboxCloud("q8AOvG028RAAAAAAAAAARl4cbDhkbW1k0CX9w09-9zce7Aoheti6kRSqXiOaFfeU")
-
-
-if __name__ == '__main__':
-    main()
