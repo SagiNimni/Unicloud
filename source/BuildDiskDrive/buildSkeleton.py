@@ -16,6 +16,7 @@ def establishUnicloudConnectionToFolder(directory, username, credentials, cloud_
             config.set("accountSettings", "tokenKey", credentials)
             config.set("accountSettings", "username", username)
             config.write(f)
+            _BuildDropboxDirectories_(directory, credentials)
         elif Cloud.GoogleDrive.name == cloud_type:
             credentials_directory = directory + "/credentials.json"
             config.set("accountSettings", "type", Cloud.GoogleDrive.value)
@@ -30,6 +31,7 @@ def establishUnicloudConnectionToFolder(directory, username, credentials, cloud_
             config.set("accountSettings", "password", credentials)
             config.set("accountSettings", "username", username)
             config.write(f)
+            _BuildMegaUploadDirectories_(directory, username=username, password=credentials)
         f.close()
         os.system("attrib +h {0}".format(directory + "/account.ini"))
 
@@ -46,6 +48,38 @@ def _BuildGoogleDriveDirectories_(directory, credentials):
             os.makedirs(local_path)
             _CreateVirtualFile_(local_path, 'GD', remote_path)
     print("done")
+
+
+def _BuildMegaUploadDirectories_(directory, username=None, password=None, remote_path=None, service=None):
+    if not service:
+        service = MegaUploadCloud(username, password)
+    files_list = service.get_files_names(remote_path)
+    for file in files_list:
+        if file != '':
+            if len(file.split('.')) == 2:
+                if not remote_path:
+                    local_path = directory + "/" + file
+                    os.makedirs(local_path)
+                    _CreateVirtualFile_(local_path, 'MU', file)
+                else:
+                    local_path = directory + "/" + remote_path + "/" + file
+                    os.makedirs(local_path)
+                    _CreateVirtualFile_(local_path, 'MU', remote_path + "/" + file)
+            else:
+                if not remote_path:
+                    _BuildMegaUploadDirectories_(directory, remote_path=file, service=service)
+                else:
+                    _BuildMegaUploadDirectories_(directory, remote_path=remote_path + "/" + file, service=service)
+
+
+def _BuildDropboxDirectories_(directory, token_key):
+    service = DropboxCloud(token_key)
+    files_list = service.get_files_names()
+    for file in files_list:
+        file = file['name']
+        local_path = directory + file
+        os.makedirs(local_path)
+        _CreateVirtualFile_(local_path, 'DB', file)
 
 
 def _CreateVirtualFile_(directory, drive_type, remote_path):

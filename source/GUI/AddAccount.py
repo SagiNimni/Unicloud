@@ -195,6 +195,17 @@ class Ui_Form(object):
             button.setText('Close')
             box.exec_()
             return
+        except Exception as e:
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Warning)
+            box.setWindowTitle('Error')
+            box.setText(str(e))
+            box.setStandardButtons(QMessageBox.Ok)
+            box.setDefaultButton(QMessageBox.Ok)
+            button = box.button(QMessageBox.Ok)
+            button.setText('Close')
+            box.exec_()
+            return
 
         config = cp.ConfigParser()
         config.read("mappedDrives.ini")
