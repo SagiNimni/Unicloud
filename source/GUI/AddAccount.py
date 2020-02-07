@@ -9,11 +9,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-import os
-import shutil
 import configparser as cp
-from executables.enums import Cloud
 from GUI.errors import BlankSpaceError
+from BuildDiskDrive import buildSkeleton
 
 
 class Ui_Form(object):
@@ -171,30 +169,10 @@ class Ui_Form(object):
             if self.nameEdit.toPlainText() == '':
                 raise BlankSpaceError
             account_directory = self.currentDrive[0] + "/" + self.nameEdit.toPlainText()
-            os.mkdir(account_directory)
-            config = cp.ConfigParser()
-            config.add_section("accountSettings")
-            with open(account_directory + "/account.ini", 'w+') as f:
-                if Cloud.Dropbox.name == self.typeEdit.currentText().replace(' ', ''):
-                    config.set("accountSettings", "type", Cloud.Dropbox.value)
-                    config.set("accountSettings", "tokenKey", self.credantialsEdit.toPlainText())
-                    config.set("accountSettings", "username", self.usernameEdit.toPlainText())
-                    config.write(f)
-                elif Cloud.GoogleDrive.name == self.typeEdit.currentText().replace(' ', ''):
-                    credentials_directory = account_directory + "/credentials.json"
-                    config.set("accountSettings", "type", Cloud.GoogleDrive.value)
-                    config.set("accountSettings", "credentials", credentials_directory)
-                    config.set("accountSettings", "username", self.usernameEdit.toPlainText())
-                    config.write(f)
-                    shutil.move(self.credantialsEdit.toPlainText(), credentials_directory)
-                    os.system("attrib +h {0}".format(credentials_directory))
-                elif Cloud.MegaUpload.name == self.typeEdit.currentText().replace(' ', ''):
-                    config.set("accountSettings", "type", Cloud.MegaUpload.value)
-                    config.set("accountSettings", "password", self.credantialsEdit.toPlainText())
-                    config.set("accountSettings", "username", self.usernameEdit.toPlainText())
-                    config.write(f)
-                f.close()
-                os.system("attrib +h {0}".format(account_directory + "/account.ini"))
+            cloud_type = self.typeEdit.currentText().replace(' ', '')
+            credentials = self.credantialsEdit.toPlainText()
+            username = self.usernameEdit.toPlainText()
+            buildSkeleton.establishUnicloudConnectionToFolder(account_directory, username, credentials, cloud_type)
         except BlankSpaceError:
             box = QMessageBox()
             box.setIcon(QMessageBox.Warning)

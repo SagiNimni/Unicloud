@@ -2,6 +2,7 @@ import subprocess
 import winreg
 import os
 from WindowsManagement.errors import DriveLetterUsedError
+from definitions import CONFIG_DIR, ROOT_DIR, SCRIPTS_DIR
 
 
 class MappedDrive:
@@ -9,7 +10,7 @@ class MappedDrive:
     This class is responsible for the mapped drive that will store the data of Unicloud.
     It includes build and delete function for the user.
     """
-    PSUBST_PATH = "~/PycharmProjects/UniCloud-VC/source/WindowsManagement/diskScripts/"
+    PSUBST_PATH = SCRIPTS_DIR + '\\'
 
     def __init__(self, letter: str, drive_directory: str, name):
         """
@@ -70,7 +71,7 @@ class MappedDrive:
         os.system("cscript {0}rename.vbs {1} {2}".format(MappedDrive.PSUBST_PATH, self.letter, name))
         print("Drive was successfully renamed to {0}".format(name))
 
-    def _change_icon_(self, icon_path=r'"C:\Users\nimni\PycharmProjects\UniCloud\configuration\cloud.ico"'):
+    def _change_icon_(self, icon_path=CONFIG_DIR + '\\cloud.ico'):
         """
         This method changes the registry in order to change the mapped drive icon.
         It might need user permission in order to complete it's task.
@@ -84,7 +85,7 @@ class MappedDrive:
         winreg.SetValueEx(key, '', 0, winreg.REG_SZ, icon_path)
         key.Close()
 
-    def _add_context_menu_(self, menu_icon=r"C:\Users\nimni\PycharmProjects\UniCloud\configuration\cloud.ico"):
+    def _add_context_menu_(self, menu_icon=CONFIG_DIR + '\\cloud.ico'):
         # create context menu with sub commands
         subkey_path = r'Directory\Shell\Unicloud'
         key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, subkey_path, 0, winreg.KEY_SET_VALUE)
@@ -97,11 +98,10 @@ class MappedDrive:
         def make_sub_command(command_name, command, command_icon):
             subkey = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{0}'.format(command_name)
             hkey = winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, subkey, 0, winreg.KEY_SET_VALUE)
-            winreg.SetValueEx(hkey, 'Icon', 0, winreg.REG_SZ,
-                              r'C:\Users\nimni\PycharmProjects\UniCloud\configuration\{0}'.format(command_icon))
+            winreg.SetValueEx(hkey, 'Icon', 0, winreg.REG_SZ, CONFIG_DIR + '\\{0}'.format(command_icon))
             subkey = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{0}\command'.format(command_name)
             hkey = winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, subkey, 0, winreg.KEY_SET_VALUE)
             winreg.SetValueEx(hkey, '', 0, winreg.REG_SZ, command)
 
-        make_sub_command("download", r'"C:\Users\nimni\PycharmProjects\UniCloud\executables\Download EXE\dist\download\
-                            download.exe" "%1"', 'download.ico')
+        make_sub_command("download", '"' + ROOT_DIR + '\\executables\\Download EXE\\dist\\download\\download.exe" "%1"',
+                         'download.ico')

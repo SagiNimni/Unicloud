@@ -1,7 +1,8 @@
 @echo off
 
 SET ShowAdminInfo=1
-net session >nul 2>nul&if errorlevel 1  C:\Users\nimni\PycharmProjects\UniCloud\WindowsManagement\diskScripts\Batch_Admin.cmd "%~0" %*
+set currentDirectory = %cd%\Batch_Admin.cmd
+net session >nul 2>nul&if errorlevel 1  %currentDirectory% "%~0" %*
 
 if "%~1" == "/?" (
 	echo:%~n0 v2.6.2-2-g36ce939

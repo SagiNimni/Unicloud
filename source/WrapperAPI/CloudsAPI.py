@@ -16,6 +16,7 @@ from WrapperAPI import convert
 from WrapperAPI import utility
 from WrapperAPI import errors as e
 from tkinter import ttk
+from definitions import MEGA_BASH_DIR
 
 
 class DropboxCloud:  # TODO implement delete functions
@@ -201,6 +202,22 @@ class GoogleDriveCloud:
                         files_list.append([item['name'], item['id'], item['parents']])
         return files_list
 
+    def get_file_path(self, file_name, parent_id=None):
+        tree = []
+        if parent_id:
+            while True:
+                folder = self.drive_service.files().get(fileId=parent_id[0], fields='id, name, parents').execute()
+                parent_id = folder.get('parents')
+                if parent_id is None:
+                    break
+                tree.append({'id': parent_id[0], 'name': folder.get('name')})
+
+        path = ''
+        for i in range(len(tree)-1, -1, -1):
+            path = path + tree[i]['name'] + "/"
+        path = path + file_name
+        return path
+
     def upload_file(self, directory, session: bool, path=""):  # TODO implement progress bar in session upload
         head, tail = ntpath.split(directory)
         name, extension = tail.split('.')
@@ -257,7 +274,10 @@ class GoogleDriveCloud:
 
     def download_file(self, path, directory):
         head, tail = ntpath.split(path)
-        files = self.get_files_metadata(head + '/')
+        if head != '':
+            files = self.get_files_metadata(head + '/')
+        else:
+            files = self.get_files_metadata()
         mother_folder = ntpath.split(head)[len(ntpath.split(head))-1]
         try:
             mother_folder_id = (next(item for item in self.folders_metadata if item['name'] == mother_folder))['id']
@@ -301,7 +321,7 @@ class GoogleDriveCloud:
 
 
 class MegaUploadCloud:
-    MEGA_BASH_DIRECTORY = "C:/Users/nimni/AppData/Local/MEGAcmd/"
+    MEGA_BASH_DIRECTORY = MEGA_BASH_DIR + "\\"
 
     def __init__(self, email, password):
         subprocess.call(self.MEGA_BASH_DIRECTORY + 'mega-logout.bat', stdout=subprocess.DEVNULL)
@@ -372,5 +392,3 @@ class MegaUploadCloud:
         used_space_bytes = int(used_space_bytes.split(':')[2])
         gb, mb = convert.convert_bytes_to_gb(used_space_bytes)
         used_space = {"GB": gb, "MB": mb}
-
-
