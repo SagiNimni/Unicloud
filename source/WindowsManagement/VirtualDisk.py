@@ -105,3 +105,5 @@ class MappedDrive:
 
         make_sub_command("download", '"' + ROOT_DIR + '\\executables\\Download EXE\\dist\\download\\download.exe" "%1"',
                          'download.ico')
+        make_sub_command("refresh", '"' + ROOT_DIR + '\\executables\\Refresh EXE\\dist\\refresh\\refresh.exe" "%1"',
+                         'refresh.ico')

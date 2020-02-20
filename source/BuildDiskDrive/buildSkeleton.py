@@ -84,6 +84,8 @@ def _BuildDropboxDirectories_(directory, token_key):
 
 def _CreateVirtualFile_(directory, drive_type, remote_path):
     config = cp.ConfigParser()
+    directory = directory.replace('\\', '/')
+    remote_path = remote_path.replace('\\', '/')
     with open(directory + "/prop.ini", 'w+') as f:
         section = "DriveSettings"
         config.add_section(section)

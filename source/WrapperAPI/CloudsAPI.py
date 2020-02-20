@@ -33,6 +33,25 @@ class DropboxCloud:  # TODO implement delete functions
         self.dbx = dropbox.Dropbox(self.token_code)
         print("Successfully Initialized Dropbox API")
 
+    def get_files_names_ordered(self, path=""):
+        files_list = {}
+        result = self.dbx.files_list_folder(path=path)
+        files = self._process_folder_entries_({}, result.entries)
+        for key in files.keys():
+            path, name = ntpath.split(key)
+            if path not in files_list.keys():
+                files_list.update({path: [name]})
+            else:
+                files_list[path].append(name)
+            if path != '/':
+                sub_path, dir_name = ntpath.split(path)
+                if sub_path not in files_list.keys():
+                    files_list.update({sub_path: [dir_name]})
+                else:
+                    if dir_name not in files_list[sub_path]:
+                        files_list[sub_path].append(dir_name)
+        return files_list
+
     def get_files_names(self, path=""):
         files_list = []
         result = self.dbx.files_list_folder(path=path)
@@ -202,6 +221,17 @@ class GoogleDriveCloud:
                         files_list.append([item['name'], item['id'], item['parents']])
         return files_list
 
+    def get_files_names(self, path=None):
+        metadata = self.get_files_metadata(path)
+        remote_files = {}
+        for file in metadata:
+            remote_path, _ = ntpath.split(self.get_file_path(file[0], file[2]))
+            if remote_path not in remote_files.keys():
+                remote_files.update({remote_path: [file[0]]})
+            else:
+                remote_files[remote_path].append(file[0])
+        return remote_files
+
     def get_file_path(self, file_name, parent_id=None):
         tree = []
         if parent_id:
@@ -359,6 +389,15 @@ class MegaUploadCloud:
         utility.enable_print()
         files = files.split('\n')
         return files
+
+    def get_all_subdirs_files_names(self, path, service=None, remote_files={}):
+        temp = self.get_files_names(path)
+        remote_files.update({path: temp})
+        for file in temp:
+            if len(file.split('.')) == 1:
+                path = (os.path.join(path, file)).replace("\\", '/')
+                self.get_all_subdirs_files_names(path, service, remote_files)
+        return remote_files
 
     def upload(self, local_path, remote_path=None):
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-put.bat', local_path]
