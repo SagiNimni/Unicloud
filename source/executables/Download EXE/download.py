@@ -5,9 +5,9 @@ import shutil
 import ntpath
 import tkinter
 from tkinter import messagebox
-from executables.enums import Cloud
+from executables import Cloud
 from WrapperAPI.CloudsAPI import GoogleDriveCloud, MegaUploadCloud, DropboxCloud
-from executables.utillty import handle_remove_readonly
+from executables import handle_remove_readonly
 
 
 def main(directory):

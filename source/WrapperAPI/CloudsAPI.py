@@ -180,9 +180,16 @@ class GoogleDriveCloud:
                     self.folders_metadata.append(item)
 
     def _drive_v3_api_(self):
+        all_results = {}
         results = self.drive_service.files().list(pageSize=10,
                                                   fields="nextPageToken, files(name, mimeType, parents, id)").execute()
-        return results
+        all_results.update(results)
+        while 'nextPageToken' in results:
+            results = self.drive_service.files().list(
+                pageToken=results['nextPageToken'], pageSize=10,
+                fields="nextPageToken, files(name, mimeType, parents, id)").execute()
+            all_results['files'].extend(results['files'])
+        return all_results
 
     def _create_folder_(self, name, path="/"):
         try:
@@ -222,7 +229,7 @@ class GoogleDriveCloud:
         return files_list
 
     def get_files_names(self, path=None):
-        metadata = self.get_files_metadata(path)
+        metadata = self.get_files_metadata(path + "/")
         remote_files = {}
         for file in metadata:
             remote_path, _ = ntpath.split(self.get_file_path(file[0], file[2]))
@@ -248,7 +255,7 @@ class GoogleDriveCloud:
         path = path + file_name
         return path
 
-    def upload_file(self, directory, session: bool, path=""):  # TODO implement progress bar in session upload
+    def upload_file(self, directory, session: bool, path=""):
         head, tail = ntpath.split(directory)
         name, extension = tail.split('.')
         if session:
@@ -402,6 +409,7 @@ class MegaUploadCloud:
     def upload(self, local_path, remote_path=None):
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-put.bat', local_path]
         if remote_path is not None:
+            remote_path = remote_path.replace('\\', "/")
             cmd_line.append(remote_path)
         status = subprocess.call(cmd_line)
         if status == 0:

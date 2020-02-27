@@ -1,9 +1,8 @@
 import sys
 import configparser as cp
 from os import walk
-import ntpath
 from tkinter import messagebox
-from executables.enums import Cloud
+from executables import Cloud
 from BuildDiskDrive.buildSkeleton import _CreateVirtualFile_
 from WrapperAPI.CloudsAPI import *
 

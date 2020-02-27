@@ -1,7 +1,6 @@
 import configparser as cp
 import shutil
-import os
-from executables.enums import Cloud
+from executables import Cloud
 from WrapperAPI.CloudsAPI import *
 from definitions import SCRIPTS_DIR, CONFIG_DIR
 

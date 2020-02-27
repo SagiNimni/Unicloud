@@ -43,7 +43,8 @@ class MappedDrive:
             os.system("attrib +s {0}\\*.* /d /s".format(letter))
             self._rename_mapped_drive_(name)
             self._change_icon_()
-            self._add_context_menu_()
+            self._add_directory_context_menu_()
+            self._add_file_context_menu()
 
     def delete_mapped_drive(self):
         """
@@ -85,13 +86,13 @@ class MappedDrive:
         winreg.SetValueEx(key, '', 0, winreg.REG_SZ, icon_path)
         key.Close()
 
-    def _add_context_menu_(self, menu_icon=CONFIG_DIR + '\\cloud.ico'):
+    def _add_directory_context_menu_(self, menu_icon=CONFIG_DIR + '\\cloud.ico'):
         # create context menu with sub commands
         subkey_path = r'Directory\Shell\Unicloud'
         key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, subkey_path, 0, winreg.KEY_SET_VALUE)
         winreg.SetValueEx(key, 'AppliesTo', 0, winreg.REG_SZ, self.letter)
         winreg.SetValueEx(key, 'Icon', 0, winreg.REG_SZ, menu_icon)
-        winreg.SetValueEx(key, 'SubCommands', 0, winreg.REG_SZ, "download")
+        winreg.SetValueEx(key, 'SubCommands', 0, winreg.REG_SZ, "download; refresh")
         winreg.SetValueEx(key, 'Position', 0, winreg.REG_SZ, "Top")
 
         # create sub commands
@@ -107,3 +108,21 @@ class MappedDrive:
                          'download.ico')
         make_sub_command("refresh", '"' + ROOT_DIR + '\\executables\\Refresh EXE\\dist\\refresh\\refresh.exe" "%1"',
                          'refresh.ico')
+
+    def _add_file_context_menu(self, menu_icon=CONFIG_DIR + '\\cloud.ico'):
+        subkey_path = r'*\shell\Unicloud'
+        key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, subkey_path, 0, winreg.KEY_SET_VALUE)
+        winreg.SetValueEx(key, 'AppliesTo', 0, winreg.REG_SZ, self.letter)
+        winreg.SetValueEx(key, 'Icon', 0, winreg.REG_SZ, menu_icon)
+        winreg.SetValueEx(key, 'SubCommands', 0, winreg.REG_SZ, "upload")
+
+        def make_sub_command(command_name, command, command_icon):
+            subkey = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{0}'.format(command_name)
+            hkey = winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, subkey, 0, winreg.KEY_SET_VALUE)
+            winreg.SetValueEx(hkey, 'Icon', 0, winreg.REG_SZ, CONFIG_DIR + '\\{0}'.format(command_icon))
+            subkey = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{0}\command'.format(command_name)
+            hkey = winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, subkey, 0, winreg.KEY_SET_VALUE)
+            winreg.SetValueEx(hkey, '', 0, winreg.REG_SZ, command)
+
+        make_sub_command('upload', '"' + ROOT_DIR + '\\executables\\Upload EXE\\dist\\upload\\upload.exe" "%1"',
+                         'upload.ico')
