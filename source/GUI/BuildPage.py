@@ -6,24 +6,30 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+
 import configparser as cp
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import pyqtSignal, QObject
 from WindowsManagement.VirtualDisk import MappedDrive
 
+MESSAGE = None
 
-class Ui_Form(object):
+
+class Ui_Form(QObject):
+    done = pyqtSignal()
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(555, 358)
+        Form.resize(559, 446)
         self.letterLbl = QtWidgets.QLabel(Form)
-        self.letterLbl.setGeometry(QtCore.QRect(20, 60, 141, 31))
+        self.letterLbl.setGeometry(QtCore.QRect(30, 190, 141, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.letterLbl.setFont(font)
         self.letterLbl.setObjectName("letterLbl")
         self.letterBox = QtWidgets.QComboBox(Form)
-        self.letterBox.setGeometry(QtCore.QRect(170, 60, 111, 31))
+        self.letterBox.setGeometry(QtCore.QRect(180, 190, 111, 31))
         font = QtGui.QFont()
         font.setFamily("Segoe MDL2 Assets")
         font.setPointSize(11)
@@ -35,43 +41,71 @@ class Ui_Form(object):
         self.letterBox.addItem("")
         self.letterBox.addItem("")
         self.nameLbl = QtWidgets.QLabel(Form)
-        self.nameLbl.setGeometry(QtCore.QRect(20, 110, 141, 31))
+        self.nameLbl.setGeometry(QtCore.QRect(30, 240, 141, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.nameLbl.setFont(font)
         self.nameLbl.setObjectName("nameLbl")
         self.nameEdit = QtWidgets.QTextEdit(Form)
-        self.nameEdit.setGeometry(QtCore.QRect(170, 110, 111, 31))
+        self.nameEdit.setGeometry(QtCore.QRect(180, 240, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.nameEdit.setFont(font)
         self.nameEdit.setObjectName("nameEdit")
         self.directortyLbl = QtWidgets.QLabel(Form)
-        self.directortyLbl.setGeometry(QtCore.QRect(20, 160, 121, 31))
+        self.directortyLbl.setGeometry(QtCore.QRect(30, 290, 121, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.directortyLbl.setFont(font)
         self.directortyLbl.setObjectName("directortyLbl")
         self.directoryEdit = QtWidgets.QTextEdit(Form)
-        self.directoryEdit.setGeometry(QtCore.QRect(170, 160, 331, 31))
+        self.directoryEdit.setGeometry(QtCore.QRect(180, 290, 331, 31))
         self.directoryEdit.setObjectName("directoryEdit")
         self.browseBtn = QtWidgets.QToolButton(Form)
-        self.browseBtn.setGeometry(QtCore.QRect(500, 170, 25, 21))
+        self.browseBtn.setGeometry(QtCore.QRect(510, 300, 25, 21))
         self.browseBtn.setObjectName("browseBtn")
-        self.CancelBtn = QtWidgets.QPushButton(Form)
-        self.CancelBtn.setGeometry(QtCore.QRect(320, 300, 101, 41))
-        self.CancelBtn.setObjectName("CancelBtn")
         self.CreateBtn = QtWidgets.QPushButton(Form)
-        self.CreateBtn.setGeometry(QtCore.QRect(440, 300, 101, 41))
+        self.CreateBtn.setGeometry(QtCore.QRect(410, 390, 131, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.CreateBtn.setFont(font)
         self.CreateBtn.setObjectName("CreateBtn")
-        Form.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.cancelBtn = QtWidgets.QPushButton(Form)
+        self.cancelBtn.setGeometry(QtCore.QRect(300, 390, 101, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.cancelBtn.setFont(font)
+        self.cancelBtn.setObjectName("cancelBtn")
+        self.usernameLbl = QtWidgets.QLabel(Form)
+        self.usernameLbl.setEnabled(True)
+        self.usernameLbl.setGeometry(QtCore.QRect(30, 70, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.usernameLbl.setFont(font)
+        self.usernameLbl.setObjectName("usernameLbl")
+        self.passwordLbl = QtWidgets.QLabel(Form)
+        self.passwordLbl.setGeometry(QtCore.QRect(30, 110, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.passwordLbl.setFont(font)
+        self.passwordLbl.setObjectName("passwordLbl")
+        self.usernameEdit = QtWidgets.QTextEdit(Form)
+        self.usernameEdit.setEnabled(True)
+        self.usernameEdit.setGeometry(QtCore.QRect(120, 70, 201, 31))
+        self.usernameEdit.setObjectName("usernameEdit")
+        self.passwordEdit = QtWidgets.QLineEdit(Form)
+        self.passwordEdit.setEnabled(True)
+        self.passwordEdit.setGeometry(QtCore.QRect(120, 110, 201, 31))
+        self.passwordEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.passwordEdit.setObjectName("passwordEdit")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
         self.browseBtn.clicked.connect(self.browseForPath)
         self.CreateBtn.clicked.connect(self.buildDrive)
-        self.CancelBtn.clicked.connect(Form.close)
+        self.cancelBtn.clicked.connect(Form.close)
+        self.done.connect(Form.close)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -85,8 +119,10 @@ class Ui_Form(object):
         self.nameLbl.setText(_translate("Form", "Enter Drive Name:"))
         self.directortyLbl.setText(_translate("Form", "Enter directory:"))
         self.browseBtn.setText(_translate("Form", "..."))
-        self.CancelBtn.setText(_translate("Form", "Cancel"))
-        self.CreateBtn.setText(_translate("Form", "Create Drive"))
+        self.CreateBtn.setText(_translate("Form", "Create Account"))
+        self.cancelBtn.setText(_translate("Form", "Cancel"))
+        self.usernameLbl.setText(_translate("Form", "Username:"))
+        self.passwordLbl.setText(_translate("Form", "Password:"))
 
     def browseForPath(self):
         folder_dir = QtWidgets.QFileDialog.getExistingDirectory(None, 'Select folder', '',
@@ -105,18 +141,22 @@ class Ui_Form(object):
         button_no = box.button(QMessageBox.No)
         button_no.setText('Cancel')
         box.exec_()
+        username, password = self.usernameEdit.toPlainText(), self.passwordEdit.text()
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
-        if dr != '' and name != '':
+        if dr != '' and name != '' and username != '' and password != '':
             if box.clickedButton() == button_yes:
+                global MESSAGE
+                MESSAGE = username + "," + password
                 config = cp.ConfigParser()
                 config.read('mappedDrives.ini')
-                section = letter + name
                 sections = config.sections()
-                if section not in sections:
-                    MappedDrive(letter, dr, name)
-                    config.add_section(section)
+                if username not in sections:
+                    # MappedDrive(letter, dr, name)
+                    config.add_section(username)
+                    config.set(username, 'disk', letter + name)
                     with open("mappedDrives.ini", "w+") as f:
                         config.write(f)
+                        self.done.emit()
         else:
             box = QMessageBox()
             box.setIcon(QMessageBox.Warning)
@@ -127,6 +167,15 @@ class Ui_Form(object):
             button = box.button(QMessageBox.Ok)
             button.setText('Close')
             box.exec_()
+
+
+def change_message(new_message):
+    global MESSAGE
+    MESSAGE = new_message
+
+
+def get_message():
+    return MESSAGE
 
 
 if __name__ == "__main__":

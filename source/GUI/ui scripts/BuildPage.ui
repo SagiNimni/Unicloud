@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>358</height>
+    <width>559</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QLabel" name="letterLbl">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>60</y>
+     <x>30</x>
+     <y>190</y>
      <width>141</width>
      <height>31</height>
     </rect>
@@ -34,8 +34,8 @@
   <widget class="QComboBox" name="letterBox">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>60</y>
+     <x>180</x>
+     <y>190</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -75,8 +75,8 @@
   <widget class="QLabel" name="nameLbl">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>110</y>
+     <x>30</x>
+     <y>240</y>
      <width>141</width>
      <height>31</height>
     </rect>
@@ -93,8 +93,8 @@
   <widget class="QTextEdit" name="nameEdit">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>110</y>
+     <x>180</x>
+     <y>240</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -108,8 +108,8 @@
   <widget class="QLabel" name="directortyLbl">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>160</y>
+     <x>30</x>
+     <y>290</y>
      <width>121</width>
      <height>31</height>
     </rect>
@@ -126,8 +126,8 @@
   <widget class="QTextEdit" name="directoryEdit">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>160</y>
+     <x>180</x>
+     <y>290</y>
      <width>331</width>
      <height>31</height>
     </rect>
@@ -136,8 +136,8 @@
   <widget class="QToolButton" name="browseBtn">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>170</y>
+     <x>510</x>
+     <y>300</y>
      <width>25</width>
      <height>21</height>
     </rect>
@@ -146,30 +146,105 @@
     <string>...</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="CancelBtn">
+  <widget class="QPushButton" name="CreateBtn">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>300</y>
+     <x>410</x>
+     <y>390</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Create Account</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancelBtn">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>390</y>
      <width>101</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="CreateBtn">
+  <widget class="QLabel" name="usernameLbl">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>300</y>
-     <width>101</width>
-     <height>41</height>
+     <x>30</x>
+     <y>70</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>Create Drive</string>
+    <string>Username:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passwordLbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>110</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Password:</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="usernameEdit">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>70</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="passwordEdit">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>110</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
    </property>
   </widget>
  </widget>

@@ -10,7 +10,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtGui import QFont
 from GUI.AddAccount import Ui_Form as ac
-from executables import handle_remove_readonly
+from executables.utillty import handle_remove_readonly
+from executables.enums import Cloud
 import shutil
 import ntpath
 import configparser as cp
