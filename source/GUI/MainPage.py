@@ -9,10 +9,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import QThread, QMutex, QMutexLocker, pyqtSignal, QObject
+from PyQt5.QtCore import QThread, QObject, QMutexLocker, QMutex
 from GUI.BuildPage import Ui_Form as bp
-from GUI.BuildPage import get_message, change_message
 from GUI.EditPage import Ui_Form as ep
+from GUI.BuildPage import get_message, set_message
 import configparser as cp
 import socket
 
@@ -24,6 +24,8 @@ MESSAGE = None
 BUILD_PAGE_ON = False
 LOCK = QMutex()
 LOCK.lock()
+LOCK2 = QMutex()
+LOCK2.lock()
 
 
 class ConnectAndLoginThread(QThread):
@@ -31,37 +33,51 @@ class ConnectAndLoginThread(QThread):
         QThread.__init__(self)
 
     def run(self):
-        global BUFFER, MESSAGE, LOCK
+        global HOST_PORT, HOST_IP, BUFFER, MESSAGE, LOCK
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((HOST_IP, HOST_PORT))
+        print("Connected to server")
 
+        should_lock = False
         while True:
+            if should_lock:
+                LOCK.lock()
+                should_lock = False
+            print("test")
             with QMutexLocker(LOCK):
+                should_lock = True
                 if MESSAGE is not None:
+                    print("sent " + MESSAGE)
                     self.client.send(MESSAGE.encode())
                     MESSAGE = None
-                if self.client.recv(BUFFER).decode() == 'ack':
-                    LOCK.lock()
-                    self.sign_up()
+                    while True:
+                        response = self.client.recv(BUFFER).decode()
+                        if response == 'ack':
+                            print('sign up')
+                            self.sign_up()
+                            break
 
     def sign_up(self):
-        global MESSAGE, BUILD_PAGE_ON
+        global MESSAGE, LOCK2, BUILD_PAGE_ON
         while True:
-            with QMutexLocker(LOCK):
+            with QMutexLocker(LOCK2):
+                print("sign up lock release")
+                if not BUILD_PAGE_ON:
+                    print("force exist")
+                    break
                 MESSAGE = get_message()
-                if MESSAGE is None and not BUILD_PAGE_ON:
-                    self.end_sign_up()
-                    break
                 if MESSAGE is not None:
+                    print("sent " + MESSAGE)
                     self.client.send(MESSAGE.encode())
-                    change_message(None)
                     MESSAGE = None
-                if self.client.recv(BUFFER).decode() == 'ack':
-                    LOCK.lock()
+                    set_message(None)
+                    while True:
+                        if self.client.recv(BUFFER).decode() == 'ack':
+                            break
+                    print("exit create loop")
                     break
-
-    def end_sign_up(self):
-        self.client.send("end".encode())
+        self.client.send('end'.encode())
+        LOCK2.lock()
 
 
 class Ui_MainWindow(QObject):
@@ -124,20 +140,20 @@ class Ui_MainWindow(QObject):
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
 
     def openBuildWindow(self):
-        global MESSAGE, LOCK, BUILD_PAGE_ON
+        global MESSAGE, BUILD_PAGE_ON, LOCK
         MESSAGE = 'create'
-        LOCK.unlock()
+        BUILD_PAGE_ON = True
         self.buildWindow = QtWidgets.QWidget()
         self.ui = bp()
         self.ui.setupUi(self.buildWindow)
-        self.ui.done.connect(LOCK.unlock)
-        self.ui.cancelBtn.clicked.connect(LOCK.unlock)
+        self.ui.done.connect(LOCK2.unlock)
+        self.ui.closed.connect(self.disableBuildPage)
         self.buildWindow.show()
-        BUILD_PAGE_ON = True
-        self.ui.destroyed.connect(self.disableBuildPage)
         self.refreshList()
+        LOCK.unlock()
 
     def openEditWindow(self):
+        self.editWIndow = QtWidgets.QWidget()
         self.ui = ep()
         diskDrive = self.drivesList.currentItem().text().split(' ')
         self.ui.setupUi(self.editWindow, diskDrive)
@@ -160,7 +176,8 @@ class Ui_MainWindow(QObject):
 
     @staticmethod
     def disableBuildPage():
-        global BUILD_PAGE_ON
+        global BUILD_PAGE_ON, LOCK2
+        LOCK2.unlock()
         BUILD_PAGE_ON = False
 
 

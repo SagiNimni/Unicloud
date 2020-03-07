@@ -30,6 +30,7 @@ def sign_up(client_socket):
     while True:
         registration_info = get_message(client_socket)
         if registration_info == 'end':
+            print("sign in ended force")
             break
         if registration_info is not None:
             username, password = registration_info.split(',')
@@ -40,6 +41,7 @@ def sign_up(client_socket):
             with open('data.json', 'w') as outfile:
                 json.dump(DATA, outfile)
             ack(client_socket)
+            print("success")
             break
 
 
@@ -51,7 +53,7 @@ def communicate(client_socket, client_address):
         message = get_message(client_socket)
         if message == 'create':
             ack(client_socket)
-            print("sent")
+            print("sign up loop")
             sign_up(client_socket)
         elif message == 'login':
             ack(client_socket)
