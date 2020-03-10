@@ -18,8 +18,10 @@ import configparser as cp
 
 
 class Ui_Form(object):
-    def setupUi(self, Form, currentDrive: list):
-        self.currentDrive = currentDrive
+    def setupUi(self, Form, username):
+        config = cp.ConfigParser()
+        config.read('mappedDrives.ini')
+        self.currentDrive = (config.get(username, 'disk').split(':'))[0] + ':'
         Form.setObjectName("Form")
         Form.resize(562, 414)
         font = QtGui.QFont()
@@ -131,6 +133,6 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = Ui_Form()
-    ui.setupUi(Form)
+    ui.setupUi(Form, 'Username')
     Form.show()
     sys.exit(app.exec_())

@@ -10,9 +10,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QMessageBox
-import configparser as cp
+import hashlib
 
 FORM = None
+MESSAGE = None
+ARGS = None
 
 
 class Ui_Form(QObject):
@@ -75,9 +77,10 @@ class Ui_Form(QObject):
         font.setPointSize(12)
         self.CreateBtn.setFont(font)
         self.CreateBtn.setObjectName("CreateBtn")
-        self.passwordEdit = QtWidgets.QTextEdit(Form)
+        self.passwordEdit = QtWidgets.QLineEdit(Form)
         self.passwordEdit.setEnabled(True)
         self.passwordEdit.setGeometry(QtCore.QRect(120, 110, 201, 31))
+        self.passwordEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.passwordEdit.setObjectName("passwordEdit")
         self.letterLbl = QtWidgets.QLabel(Form)
         self.letterLbl.setGeometry(QtCore.QRect(30, 190, 141, 31))
@@ -97,6 +100,7 @@ class Ui_Form(QObject):
         font.setPointSize(12)
         self.passwordLbl.setFont(font)
         self.passwordLbl.setObjectName("passwordLbl")
+        Form.setWindowModality(QtCore.Qt.ApplicationModal)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -132,33 +136,14 @@ class Ui_Form(QObject):
         self.directoryEdit.setPlainText(folder_dir)
 
     def login(self):
-        global MESSAGE
-        box = QMessageBox()
-        box.setIcon(QMessageBox.Question)
-        box.setWindowTitle('Create Drive')
-        box.setText('Are you sure you want to create this drive?')
-        box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        box.setDefaultButton(QMessageBox.No)
-        button_yes = box.button(QMessageBox.Yes)
-        button_yes.setText('Ok')
-        button_no = box.button(QMessageBox.No)
-        button_no.setText('Cancel')
-        box.exec_()
+        global MESSAGE, ARGS
         username, password = self.usernameEdit.toPlainText(), self.passwordEdit.text()
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':
-            if box.clickedButton() == button_yes:
-                MESSAGE = '{0},{1}'.format(username, str(hash(password)))
-                config = cp.ConfigParser()
-                config.read('mappedDrives.ini')
-                sections = config.sections()
-                if username not in sections:
-                    config.add_section(username)
-                    config.set(username, 'disk', letter + name)
-                    with open("mappedDrives.ini", "w+") as f:
-                        config.write(f)
-                        print("emited done")
-                        self.done.emit()
+            MESSAGE = '{0},{1}'.format(username, hashlib.sha224(password.encode()).hexdigest())
+            ARGS = '{0},{1},{2}'.format(letter, dr, name)
+            print('emited done')
+            self.done.emit()
         else:
             box = QMessageBox()
             box.setIcon(QMessageBox.Warning)
@@ -174,6 +159,26 @@ class Ui_Form(QObject):
         global FORM
         self.close.emit()
         FORM.close()
+
+
+def get_args():
+    global ARGS
+    return ARGS
+
+
+def set_args(new_args):
+    global ARGS
+    ARGS = new_args
+
+
+def get_message():
+    global MESSAGE
+    return MESSAGE
+
+
+def set_message(new_message):
+    global MESSAGE
+    MESSAGE = new_message
 
 
 if __name__ == "__main__":

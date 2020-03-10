@@ -9,6 +9,8 @@
       <change beforePath="$PROJECT_DIR$/AccountManagement/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/AccountManagement/data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AccountManagement/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/AccountManagement/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/BuildPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/BuildPage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/EditPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/EditPage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/LoginPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/LoginPage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/MainPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/MainPage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/mappedDrives.ini" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/mappedDrives.ini" afterDir="false" />
     </list>
@@ -99,31 +101,34 @@
     <session id="1407512527">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="18" />
+          <entry key="project.closed" value="25" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="3" />
           <entry key="project.open.time.18" value="3" />
-          <entry key="project.open.time.19" value="4" />
-          <entry key="project.open.time.20" value="3" />
+          <entry key="project.open.time.19" value="6" />
+          <entry key="project.open.time.20" value="4" />
           <entry key="project.open.time.21" value="1" />
-          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="22" />
+          <entry key="project.opened" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="4900" />
+          <entry key="Python Console" value="5122" />
           <entry key="bat" value="83" />
           <entry key="dummy" value="22" />
           <entry key="ini" value="561" />
           <entry key="json" value="82" />
-          <entry key="py" value="150033" />
+          <entry key="py" value="153031" />
           <entry key="txt" value="49" />
           <entry key="vbs" value="10" />
         </counts>
@@ -134,7 +139,7 @@
           <entry key="Ini" value="561" />
           <entry key="JSON" value="82" />
           <entry key="PLAIN_TEXT" value="81" />
-          <entry key="Python" value="154933" />
+          <entry key="Python" value="158153" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -142,11 +147,11 @@
           <entry key="bat" value="3" />
           <entry key="cmd" value="3" />
           <entry key="ico" value="3" />
-          <entry key="ini" value="21" />
-          <entry key="json" value="32" />
-          <entry key="py" value="212" />
+          <entry key="ini" value="25" />
+          <entry key="json" value="35" />
+          <entry key="py" value="232" />
           <entry key="toc" value="2" />
-          <entry key="vbs" value="8" />
+          <entry key="vbs" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -154,10 +159,10 @@
           <entry key="Bat" value="3" />
           <entry key="Cmd" value="3" />
           <entry key="Image" value="3" />
-          <entry key="Ini" value="20" />
-          <entry key="JSON" value="32" />
-          <entry key="PLAIN_TEXT" value="11" />
-          <entry key="Python" value="212" />
+          <entry key="Ini" value="24" />
+          <entry key="JSON" value="35" />
+          <entry key="PLAIN_TEXT" value="12" />
+          <entry key="Python" value="232" />
         </counts>
       </usages-collector>
     </session>
@@ -168,56 +173,51 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AccountManagement/server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GUI/MainPage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="137" column="51" lean-forward="true" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
+            <state relative-caret-position="514">
+              <caret line="112" column="42" lean-forward="true" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
               <folding>
                 <element signature="e#263#309#0" expanded="true" />
-                <marker date="1583574565034" expanded="true" signature="821:826" ph="..." />
-                <marker date="1583574565034" expanded="true" signature="4865:4871" ph="..." />
-                <marker date="1583574565034" expanded="true" signature="5766:5775" ph="..." />
+                <marker date="1583853173157" expanded="true" signature="3253:4396" ph="..." />
+                <marker date="1583853173157" expanded="true" signature="7484:7489" ph="..." />
+                <marker date="1583853173157" expanded="true" signature="8140:8507" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GUI/BuildPage.py">
+        <entry file="file://$PROJECT_DIR$/GUI/LoginPage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="130" selection-start-line="130" selection-end-line="133" selection-end-column="51" />
+            <state relative-caret-position="340">
+              <caret line="140" column="118" selection-start-line="140" selection-start-column="118" selection-end-line="140" selection-end-column="118" />
               <folding>
-                <element signature="e#264#289#0" expanded="true" />
-                <marker date="1583574607451" expanded="true" signature="4482:4487" ph="..." />
-                <marker date="1583574607451" expanded="true" signature="5801:5807" ph="..." />
-                <marker date="1583574607451" expanded="true" signature="7928:7931" ph="..." />
+                <element signature="e#264#306#0" expanded="true" />
+                <marker date="1583854516035" expanded="true" signature="6855:6952" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GUI/LoginPage.py">
+        <entry file="file://$PROJECT_DIR$/AccountManagement/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="131" column="51" selection-start-line="131" selection-start-column="51" selection-end-line="131" selection-end-column="51" />
+            <state relative-caret-position="335">
+              <caret line="66" column="25" lean-forward="true" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
               <folding>
-                <element signature="e#264#306#0" expanded="true" />
-                <marker date="1583576490733" expanded="true" signature="5672:5681" ph="..." />
+                <element signature="e#0#16#0" expanded="true" />
+                <marker date="1583854202029" expanded="true" signature="1170:1700" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AccountManagement/data.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="131" selection-start-column="131" selection-end-column="131" />
             </state>
           </provider>
         </entry>
@@ -252,6 +252,7 @@
       <find>Cloud</find>
       <find>Unicloud</find>
       <find>test.txt</find>
+      <find>b_get</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -303,20 +304,20 @@
         <option value="$PROJECT_DIR$/WrapperAPI/CloudsAPI.py" />
         <option value="$PROJECT_DIR$/WindowsManagement/VirtualDisk.py" />
         <option value="$PROJECT_DIR$/BuildDiskDrive/buildSkeleton.py" />
-        <option value="$PROJECT_DIR$/GUI/EditPage.py" />
         <option value="$PROJECT_DIR$/AccountManagement/client.py" />
-        <option value="$PROJECT_DIR$/AccountManagement/server.py" />
-        <option value="$PROJECT_DIR$/GUI/MainPage.py" />
+        <option value="$PROJECT_DIR$/GUI/EditPage.py" />
         <option value="$PROJECT_DIR$/GUI/BuildPage.py" />
-        <option value="$PROJECT_DIR$/AccountManagement/data.json" />
         <option value="$PROJECT_DIR$/GUI/mappedDrives.ini" />
+        <option value="$PROJECT_DIR$/GUI/MainPage.py" />
+        <option value="$PROJECT_DIR$/AccountManagement/data.json" />
+        <option value="$PROJECT_DIR$/AccountManagement/server.py" />
         <option value="$PROJECT_DIR$/GUI/LoginPage.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-215" />
+    <option name="y" value="-18" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -326,7 +327,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -337,12 +337,13 @@
             <path>
               <item name="source" type="b2602c69:ProjectViewProjectNode" />
               <item name="source" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI" type="462c0819:PsiDirectoryNode" />
+              <item name="AccountManagement" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,19 +353,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\configuration" />
-      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\GUI" />
-      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\WindowsManagement" />
-      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables" />
-      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\WrapperAPI\Google Drive Auth" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables\Upload EXE" />
       <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables" />
       <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables\Refresh EXE" />
       <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\GUI" />
       <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables\Download EXE" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\configuration" />
+      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\GUI" />
+      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\WindowsManagement" />
+      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\executables" />
+      <recent name="C:\Users\nimni\PycharmProjects\Unicloud-VC\source\WrapperAPI\Google Drive Auth" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -379,28 +380,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.LoginPage">
-    <configuration name="BuildPage" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="UniCloud" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUI" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUI/BuildPage.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.MainPage">
     <configuration name="CloudsAPI" type="PythonConfigurationType" factoryName="Python">
       <module name="UniCloud" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -414,6 +394,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WrapperAPI/CloudsAPI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="EditPage" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="UniCloud" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUI" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUI/EditPage.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -464,7 +465,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="VirtualDisk" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="UniCloud" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -472,11 +473,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AccountManagement" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WindowsManagement" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AccountManagement/client.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WindowsManagement/VirtualDisk.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -532,17 +533,17 @@
       <item itemvalue="Python.CloudsAPI" />
       <item itemvalue="Python.MainPage" />
       <item itemvalue="Python.server" />
-      <item itemvalue="Python.BuildPage" />
-      <item itemvalue="Python.client" />
       <item itemvalue="Python.LoginPage" />
+      <item itemvalue="Python.EditPage" />
+      <item itemvalue="Python.VirtualDisk" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.LoginPage" />
         <item itemvalue="Python.MainPage" />
         <item itemvalue="Python.server" />
-        <item itemvalue="Python.BuildPage" />
-        <item itemvalue="Python.client" />
+        <item itemvalue="Python.VirtualDisk" />
+        <item itemvalue="Python.EditPage" />
+        <item itemvalue="Python.LoginPage" />
       </list>
     </recent_temporary>
   </component>
@@ -592,7 +593,26 @@
       <window_info id="Favorites" order="2" sideWeight="0.50323623" side_tool="true" weight="0.13224447" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32944915" />
-      <window_info active="true" anchor="bottom" x="0" y="361" width="1920" height="318" id="Run" order="2" sideWeight="0.49894625" visible="true" weight="0.33262712" />
+      <window_info anchor="bottom" x="0" y="361" width="1920" height="318" id="Run" order="2" sideWeight="0.75416666" weight="0.33262712" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3983051" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.32944915" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.24583334" side_tool="true" weight="0.33262712" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32838982" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.2838983" />
+      <window_info anchor="bottom" id="TODO" order="10" weight="0.329718" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49676377" visible="true" weight="0.10104167" />
+      <window_info id="Structure" order="1" sideWeight="0.5008375" side_tool="true" weight="0.13224447" />
+      <window_info id="Favorites" order="2" sideWeight="0.50323623" side_tool="true" weight="0.13224447" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32944915" />
+      <window_info anchor="bottom" x="0" y="361" width="1920" height="318" id="Run" order="2" sideWeight="0.49894625" visible="true" weight="0.33262712" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3983051" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -604,7 +624,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -622,6 +642,11 @@
           <line>13</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/WindowsManagement/VirtualDisk.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -633,8 +658,7 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="MESSAGE" />
-        <watch expression="BUILD_WINDOW_ON" />
+        <watch expression="DATA" />
       </configuration>
     </watches-manager>
   </component>
@@ -768,13 +792,6 @@
     <entry file="file://$PROJECT_DIR$/WrapperAPI/convert.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/WindowsManagement/diskScripts/rename.vbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="39" lean-forward="true" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WindowsManagement/diskScripts/psubst.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -827,16 +844,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WindowsManagement/VirtualDisk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="115" column="67" lean-forward="true" selection-start-line="115" selection-start-column="67" selection-end-line="115" selection-end-column="67" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WrapperAPI/CloudsAPI.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
@@ -875,13 +882,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GUI/AddAccount.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="208" lean-forward="true" selection-start-line="208" selection-end-line="208" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/70370312/PyQt5/QtCore/pyqtSignal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -896,12 +896,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccountManagement/server.py">
+    <entry file="file://$PROJECT_DIR$/WindowsManagement/diskScripts/rename.vbs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        <state relative-caret-position="34">
+          <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GUI/AddAccount.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="98" column="8" lean-forward="true" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GUI/EditPage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GUI/mappedDrives.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WindowsManagement/VirtualDisk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
           <folding>
-            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GUI/BuildPage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="96" selection-start-line="96" selection-end-line="100" selection-end-column="55" />
+          <folding>
+            <element signature="e#264#289#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -909,56 +943,41 @@
     <entry file="file://$PROJECT_DIR$/AccountManagement/data.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+          <caret column="131" selection-start-column="131" selection-end-column="131" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GUI/mappedDrives.ini">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/GUI/MainPage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="137" column="51" lean-forward="true" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
+        <state relative-caret-position="514">
+          <caret line="112" column="42" lean-forward="true" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
           <folding>
             <element signature="e#263#309#0" expanded="true" />
-            <marker date="1583574565034" expanded="true" signature="821:826" ph="..." />
-            <marker date="1583574565034" expanded="true" signature="4865:4871" ph="..." />
-            <marker date="1583574565034" expanded="true" signature="5766:5775" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GUI/EditPage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="136" />
-          <folding>
-            <element signature="e#263#309#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GUI/BuildPage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="130" selection-start-line="130" selection-end-line="133" selection-end-column="51" />
-          <folding>
-            <element signature="e#264#289#0" expanded="true" />
-            <marker date="1583574607451" expanded="true" signature="4482:4487" ph="..." />
-            <marker date="1583574607451" expanded="true" signature="5801:5807" ph="..." />
-            <marker date="1583574607451" expanded="true" signature="7928:7931" ph="..." />
+            <marker date="1583853173157" expanded="true" signature="3253:4396" ph="..." />
+            <marker date="1583853173157" expanded="true" signature="7484:7489" ph="..." />
+            <marker date="1583853173157" expanded="true" signature="8140:8507" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GUI/LoginPage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="131" column="51" selection-start-line="131" selection-start-column="51" selection-end-line="131" selection-end-column="51" />
+        <state relative-caret-position="340">
+          <caret line="140" column="118" selection-start-line="140" selection-start-column="118" selection-end-line="140" selection-end-column="118" />
           <folding>
             <element signature="e#264#306#0" expanded="true" />
-            <marker date="1583576490733" expanded="true" signature="5672:5681" ph="..." />
+            <marker date="1583854516035" expanded="true" signature="6855:6952" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccountManagement/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="66" column="25" lean-forward="true" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+            <marker date="1583854202029" expanded="true" signature="1170:1700" ph="..." />
           </folding>
         </state>
       </provider>

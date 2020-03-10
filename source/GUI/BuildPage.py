@@ -99,6 +99,7 @@ class Ui_Form(QObject):
         self.passwordEdit.setGeometry(QtCore.QRect(120, 110, 201, 31))
         self.passwordEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.passwordEdit.setObjectName("passwordEdit")
+        Form.setWindowModality(QtCore.Qt.ApplicationModal)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -155,7 +156,7 @@ class Ui_Form(QObject):
                 config.read('mappedDrives.ini')
                 sections = config.sections()
                 if username not in sections:
-                    # MappedDrive(letter, dr, name)
+                    MappedDrive(letter, dr, name)
                     config.add_section(username)
                     config.set(username, 'disk', letter + name)
                     with open("mappedDrives.ini", "w+") as f:

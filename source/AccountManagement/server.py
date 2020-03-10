@@ -25,12 +25,20 @@ def ack(client_socket):
         pass
 
 
+def end(client_socket):
+    try:
+       client_socket.send("end".encode())
+    except ConnectionResetError:
+        pass
+    except OSError:
+        pass
+
+
 def sign_up(client_socket):
     global DATA
     while True:
         registration_info = get_message(client_socket)
         if registration_info == 'end':
-            print("sign in ended force")
             break
         if registration_info is not None:
             username, password = registration_info.split(',')
@@ -45,24 +53,47 @@ def sign_up(client_socket):
             break
 
 
+def login(client_socket):
+    global DATA
+    while True:
+        login_info = get_message(client_socket)
+        if login_info == 'end':
+            break
+        if login_info is not None:
+            username, password = login_info.split(',')
+            if username in DATA:
+                if DATA[username]['password'] == password:
+                    print("logged in")
+                    break
+                else:
+                    client_socket.send('wrong'.encode())
+            else:
+                client_socket.send('wrong'.encode())
+
+
 def communicate(client_socket, client_address):
     global DATA, BUFFER
     ip, port = client_address
     print("Client connected, ip: ", ip, " port: ", port)
-    while True:
-        message = get_message(client_socket)
-        if message == 'create':
-            ack(client_socket)
-            print("sign up loop")
-            sign_up(client_socket)
-        elif message == 'login':
-            ack(client_socket)
-            while True:
-                login_info = get_message(client_socket)
-                if login_info is not None:
-                    if login_info[0] in DATA['Unicloud Accounts']:
-                        if DATA['Unicloud Accounts']['username']['password'] == login_info[1]:
-                            print("success")
+    print("Number of connected clients: " + str(threading.active_count() - 1))
+    try:
+        while True:
+            message = get_message(client_socket)
+            if message == 'disconnect':
+                end(client_socket)
+                client_socket.close()
+                print("Client disconnected, ip: ", ip, " port: ", port)
+                break
+            if message == 'create':
+                ack(client_socket)
+                sign_up(client_socket)
+            elif message == 'login':
+                ack(client_socket)
+                login(client_socket)
+    except Exception as e:
+        client_socket.close()
+        print("Client crashed, ip: ", ip, " port: ", port, ", Error:")
+        print(e)
 
 
 def main():
