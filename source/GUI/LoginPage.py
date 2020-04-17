@@ -1,15 +1,7 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:/Users/nimni/PycharmProjects/Unicloud-VC/source/GUI/ui scripts/LoginPage.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QMessageBox
+import configparser as cp
 import hashlib
 import definitions
 
@@ -144,6 +136,16 @@ class Ui_Form(QObject):
             MESSAGE = '{0},{1},{2}'.format(username, hashlib.sha224(password.encode()).hexdigest(),
                                            definitions.MAC_ADDRESS)
             ARGS = '{0},{1},{2}'.format(letter, dr, name)
+
+            config = cp.ConfigParser()
+            config.read('mappedDrives.ini')
+            sections = config.sections()
+            if username not in sections:
+                # MappedDrive(letter, dr, name)
+                config.add_section(username)
+                config.set(username, 'disk', letter + name)
+                with open("mappedDrives.ini", "w+") as f:
+                    config.write(f)
             print('emited done')
             self.done.emit()
         else:

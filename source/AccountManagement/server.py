@@ -45,11 +45,11 @@ def sign_up(client_socket):
             DATA[username] = {}
             DATA[username].update({
               'password': password,
-              'devices': '({0})'.format(device_mac),
+              'devices': "('{0}',)".format(device_mac),
               'methods': "Empty"
             })
-            with open('data.json', 'w') as outfile:
-                json.dump(DATA, outfile)
+            with open('data.json', 'w') as f:
+                json.dump(DATA, f)
             ack(client_socket)
             print("success")
             break
@@ -65,10 +65,12 @@ def login(client_socket):
             username, password, device_mac = login_info.split(',')
             if username in DATA:
                 if DATA[username]['password'] == password:
-                    print("logged in")
-                    devices = eval("{0} + ({1},)".format(DATA[username]['devices'], device_mac))
+                    devices = eval("{0} + ('{1}',)".format(DATA[username]['devices'], device_mac))
                     DATA[username]['devices'] = str(devices)
+                    with open("data.json", 'w+') as f:
+                        json.dump(DATA, f)
                     client_socket.send('as'.encode())
+                    print("logged in")
                     break
                 else:
                     client_socket.send('wrong'.encode())
