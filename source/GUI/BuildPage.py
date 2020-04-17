@@ -12,6 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import pyqtSignal, QObject
 from WindowsManagement.VirtualDisk import MappedDrive
+import hashlib
+import definitions
 
 FORM = None
 MESSAGE = None
@@ -151,12 +153,13 @@ class Ui_Form(QObject):
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':
             if box.clickedButton() == button_yes:
-                MESSAGE = '{0},{1}'.format(username, str(hash(password)))
+                MESSAGE = '{0},{1},{2}'.format(username, hashlib.sha224(password.encode()).hexdigest(),
+                                           definitions.MAC_ADDRESS)
                 config = cp.ConfigParser()
                 config.read('mappedDrives.ini')
                 sections = config.sections()
                 if username not in sections:
-                    MappedDrive(letter, dr, name)
+                    # MappedDrive(letter, dr, name)
                     config.add_section(username)
                     config.set(username, 'disk', letter + name)
                     with open("mappedDrives.ini", "w+") as f:

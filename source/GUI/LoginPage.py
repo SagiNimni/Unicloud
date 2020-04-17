@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QMessageBox
 import hashlib
+import definitions
 
 FORM = None
 MESSAGE = None
@@ -140,7 +141,8 @@ class Ui_Form(QObject):
         username, password = self.usernameEdit.toPlainText(), self.passwordEdit.text()
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':
-            MESSAGE = '{0},{1}'.format(username, hashlib.sha224(password.encode()).hexdigest())
+            MESSAGE = '{0},{1},{2}'.format(username, hashlib.sha224(password.encode()).hexdigest(),
+                                           definitions.MAC_ADDRESS)
             ARGS = '{0},{1},{2}'.format(letter, dr, name)
             print('emited done')
             self.done.emit()
@@ -159,6 +161,30 @@ class Ui_Form(QObject):
         global FORM
         self.close.emit()
         FORM.close()
+
+    @staticmethod
+    def accountAlreadyExists():
+        box = QMessageBox()
+        box.setIcon(QMessageBox.Warning)
+        box.setWindowTitle('Account Exists')
+        box.setText('The account you are trying to reach to is already logged in')
+        box.setStandardButtons(QMessageBox.Ok)
+        box.setDefaultButton(QMessageBox.Ok)
+        button = box.button(QMessageBox.Ok)
+        button.setText('Close')
+        box.exec_()
+
+    @staticmethod
+    def wrongDetails():
+        box = QMessageBox()
+        box.setIcon(QMessageBox.Warning)
+        box.setWindowTitle('Wrong Details')
+        box.setText('The username or password are wrong')
+        box.setStandardButtons(QMessageBox.Ok)
+        box.setDefaultButton(QMessageBox.Ok)
+        button = box.button(QMessageBox.Ok)
+        button.setText('Close')
+        box.exec_()
 
 
 def get_args():

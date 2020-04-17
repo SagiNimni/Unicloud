@@ -1,15 +1,7 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:\Users\nimni\PycharmProjects\Unicloud-VC\source\GUI\ui scripts\mainPage.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QThread, QObject, QMutexLocker, QMutex
+from PyQt5.QtWidgets import QMessageBox
 from GUI.BuildPage import Ui_Form as bp
 from GUI.EditPage import Ui_Form as ep
 from GUI.LoginPage import Ui_Form as lp
@@ -19,7 +11,7 @@ from WindowsManagement.VirtualDisk import MappedDrive
 import configparser as cp
 import socket
 
-HOST_IP = "10.100.102.16"
+HOST_IP = socket.gethostbyname(socket.gethostname())
 HOST_PORT = 20
 BUFFER = 1024
 MESSAGE = None
@@ -32,9 +24,10 @@ LOCK2.lock()
 
 
 class ConnectAndLoginThread(QThread):
-    def __init__(self):
+    def __init__(self, ui):
         QThread.__init__(self)
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.ui = ui
 
     def run(self):
         global HOST_PORT, HOST_IP, BUFFER, MESSAGE, LOCK
@@ -105,21 +98,26 @@ class ConnectAndLoginThread(QThread):
                 if MESSAGE is not None:
                     print("sent " + MESSAGE)
                     self.client.send(MESSAGE.encode())
+                    item = self.ui.drivesList.findItems(MESSAGE.split(',')[0], Qt.Qt.MatchFlag.MatchRecursive)
                     MESSAGE = None
                     b_set_message(None)
-                    while True:
-                        response = self.client.recv(BUFFER).decode()
-                        if response == 'wrong':
-                            print('wrong')
-                            break
-                        else:
-                            letter, dr, name = get_args().split(',')
-                            # MappedDrive(letter, dr, name)
-                            print("success")
-                            break
-                    set_args(None)
-                    print("exit login loop")
-                    break
+                    if not item:
+                        while True:
+                            response = self.client.recv(BUFFER).decode()
+                            if response == 'wrong':
+                                print('wrong')
+                                break
+                            else:
+                                letter, dr, name = get_args().split(',')
+                                # MappedDrive(letter, dr, name)
+                                print("success")
+                                break
+                        set_args(None)
+                        print("exit login loop")
+                        break
+                    else:
+                        print('already exists')
+                        break
         self.client.send('end'.encode())
         LOCK2.lock()
 
@@ -177,7 +175,7 @@ class Ui_MainWindow(QObject):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.refreshList()
-        self.client = ConnectAndLoginThread()
+        self.client = ConnectAndLoginThread(self)
         self.client.start()
 
         self.loginBtn.clicked.connect(self.openLoginWindow)
