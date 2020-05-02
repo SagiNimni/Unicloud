@@ -1,20 +1,16 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:\Users\nimni\PycharmProjects\Unicloud-VC\source\GUI\ui scripts\addAccount.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import pyqtSignal, QObject
 import configparser as cp
 from GUI.errors import BlankSpaceError
 from BuildDiskDrive import buildSkeleton
+import definitions
 
 
-class Ui_Form(object):
+class Ui_Form(QObject):
+    done = pyqtSignal()
+    MESSAGE = None
+
     def setupUi(self, Form, currentDrive: list):
         self.currentDrive = currentDrive
         Form.setObjectName("Form")
@@ -49,8 +45,9 @@ class Ui_Form(object):
         self.browseBtn.setEnabled(True)
         self.browseBtn.setGeometry(QtCore.QRect(330, 240, 25, 19))
         self.browseBtn.setObjectName("browseBtn")
-        self.credantialsEdit = QtWidgets.QTextEdit(Form)
+        self.credantialsEdit = QtWidgets.QLineEdit(Form)
         self.credantialsEdit.setEnabled(True)
+        self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.credantialsEdit.setGeometry(QtCore.QRect(130, 230, 201, 31))
         self.credantialsEdit.setObjectName("credantialsEdit")
         self.credantialsLbl = QtWidgets.QLabel(Form)
@@ -162,7 +159,7 @@ class Ui_Form(object):
 
     def addAccountApproved(self):
         try:
-            if self.credantialsEdit.toPlainText() == '':
+            if self.credantialsEdit.text() == '':
                 raise BlankSpaceError
             if self.usernameEdit.toPlainText() == '':
                 raise BlankSpaceError
@@ -170,8 +167,9 @@ class Ui_Form(object):
                 raise BlankSpaceError
             account_directory = self.currentDrive[0] + "/" + self.nameEdit.toPlainText()
             cloud_type = self.typeEdit.currentText().replace(' ', '')
-            credentials = self.credantialsEdit.toPlainText()
+            credentials = self.credantialsEdit.text()
             username = self.usernameEdit.toPlainText()
+            self.MESSAGE = 'add,' + username + ',' + credentials + ',' + cloud_type
             buildSkeleton.establishUnicloudConnectionToFolder(account_directory, username, credentials, cloud_type)
         except BlankSpaceError:
             box = QMessageBox()
@@ -208,8 +206,8 @@ class Ui_Form(object):
             return
 
         config = cp.ConfigParser()
-        config.read("mappedDrives.ini")
-        section = self.currentDrive[0] + self.currentDrive[1]
+        config.read(definitions.DRIVES_LIST_DIR)
+        section = self.currentDrive[1]
         key = None
         try:
             for i in range(1, 10):
@@ -217,9 +215,10 @@ class Ui_Form(object):
                 config[section][key]
         except KeyError:
             config.set(section, key, account_directory + "/account.ini")
-            with open("mappedDrives.ini", 'w+') as f:
+            with open(definitions.DRIVES_LIST_DIR, 'w+') as f:
                 config.write(f)
                 f.close()
+            self.done.emit()
 
 
 if __name__ == "__main__":

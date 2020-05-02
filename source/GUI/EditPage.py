@@ -1,18 +1,32 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtGui import QFont
+from PyQt5.QtCore import pyqtSignal, QObject
 from GUI.AddAccount import Ui_Form as ac
 from executables.utillty import handle_remove_readonly
 from executables.enums import Cloud
 import shutil
 import ntpath
+import definitions
 import configparser as cp
 
 
-class Ui_Form(object):
+class Ui_Form(QObject):
+    add = pyqtSignal()
+    remove = pyqtSignal()
+    closed = pyqtSignal()
+
+    MESSAGE2 = None
+    FORM = None
+
     def setupUi(self, Form, username):
+        global FORM
+        FORM = Form
+
+        self.username = username
         config = cp.ConfigParser()
-        config.read('mappedDrives.ini')
-        self.currentDrive = (config.get(username, 'disk').split(':'))[0] + ':'
+        config.read(definitions.DRIVES_LIST_DIR)
+        self.currentDrive = [(config.get(username, 'disk').split(':'))[0] + ':', username]
+        self.password = config.get(username, 'password')
         Form.setObjectName("Form")
         Form.resize(562, 414)
         font = QtGui.QFont()
@@ -42,6 +56,7 @@ class Ui_Form(object):
         font.setPointSize(12)
         self.CancelBtn.setFont(font)
         self.CancelBtn.setObjectName("CancelBtn")
+        Form.setWindowModality(QtCore.Qt.ApplicationModal)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -51,6 +66,7 @@ class Ui_Form(object):
         self.addAccount.clicked.connect(self.openAddAccountWindow)
         self.CancelBtn.clicked.connect(Form.close)
         self.RemoveAccount.clicked.connect(self.removeAccount)
+        self.CancelBtn.clicked.connect(self.exit)
         self.accountList.itemActivated.connect(self.enableRemove)
 
     def retranslateUi(self, Form):
@@ -68,6 +84,7 @@ class Ui_Form(object):
         self.addAccountWindow = QtWidgets.QWidget()
         self.ui = ac()
         self.ui.setupUi(self.addAccountWindow, self.currentDrive)
+        self.ui.done.connect(self.accountAdded)
         self.addAccountWindow.show()
 
     def removeAccount(self):
@@ -117,6 +134,17 @@ class Ui_Form(object):
                     self.accountList.addItem(item)
             except KeyError:
                 break
+
+    def accountAdded(self):
+        self.MESSAGE2 = self.ui.MESSAGE + ',' + self.username + ',' + self.password
+        self.add.emit()
+        FORM.close()
+
+    def exit(self):
+        global FORM
+        print("emited close")
+        self.closed.emit()
+        FORM.close()
 
 
 if __name__ == "__main__":

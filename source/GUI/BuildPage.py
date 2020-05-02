@@ -18,6 +18,7 @@ import definitions
 FORM = None
 MESSAGE = None
 
+
 class Ui_Form(QObject):
     done = pyqtSignal()
     closed = pyqtSignal()
@@ -153,16 +154,17 @@ class Ui_Form(QObject):
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':
             if box.clickedButton() == button_yes:
-                MESSAGE = '{0},{1},{2}'.format(username, hashlib.sha224(password.encode()).hexdigest(),
-                                           definitions.MAC_ADDRESS)
+                hashed_password = hashlib.sha224(password.encode()).hexdigest()
+                MESSAGE = '{0},{1},{2}'.format(username, hashed_password, definitions.MAC_ADDRESS)
                 config = cp.ConfigParser()
-                config.read('mappedDrives.ini')
+                config.read(definitions.DRIVES_LIST_DIR)
                 sections = config.sections()
                 if username not in sections:
                     # MappedDrive(letter, dr, name)
                     config.add_section(username)
+                    config.set(username, 'password', hashed_password)
                     config.set(username, 'disk', letter + name)
-                    with open("mappedDrives.ini", "w+") as f:
+                    with open(definitions.DRIVES_LIST_DIR, "w+") as f:
                         config.write(f)
                         print("emited done")
                         self.done.emit()

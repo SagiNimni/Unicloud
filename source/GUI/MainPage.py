@@ -1,3 +1,9 @@
+import sys
+import os
+conf_path = os.getcwd()
+sys.path.append(conf_path)
+sys.path.append(conf_path + r'\scripts\Setup')
+
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QThread, QObject, QMutexLocker, QMutex
@@ -10,6 +16,7 @@ from GUI.LoginPage import get_message as b_get_message, set_message as b_set_mes
 from WindowsManagement.VirtualDisk import MappedDrive
 import configparser as cp
 import socket
+import definitions
 
 HOST_IP = socket.gethostbyname(socket.gethostname())
 HOST_PORT = 20
@@ -58,6 +65,11 @@ class ConnectAndLoginThread(QThread):
                                     MESSAGE = None
                                     print('login')
                                     self.login()
+                                    break
+                                elif MESSAGE == 'edit':
+                                    MESSAGE = None
+                                    print('edit')
+                                    self.edit()
                                     break
 
             except Exception as e:
@@ -118,6 +130,28 @@ class ConnectAndLoginThread(QThread):
                     else:
                         print('already exists')
                         break
+        self.client.send('end'.encode())
+        LOCK2.lock()
+
+    def edit(self):
+        global BUFFER, MESSAGE, LOCK2, BUFFER, PAGE_ON
+        while True:
+            with QMutexLocker(LOCK2):
+                print("add lock realese")
+                if not PAGE_ON:
+                    print("force exist")
+                    break
+                MESSAGE = self.ui.ui.MESSAGE2 + ',' + definitions.MAC_ADDRESS
+                if MESSAGE is not None:
+                    print('sent ' + MESSAGE)
+                    self.client.send(MESSAGE.encode())
+                    MESSAGE = None
+                    while True:
+                        response = self.client.recv(BUFFER).decode()
+                        if response == 'success':
+                            break
+                    print('exit edit loop')
+                    break
         self.client.send('end'.encode())
         LOCK2.lock()
 
@@ -192,7 +226,7 @@ class Ui_MainWindow(QObject):
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
 
     def openBuildWindow(self):
-        global MESSAGE, PAGE_ON, LOCK
+        global MESSAGE, PAGE_ON, LOCK, LOCK2
         MESSAGE = 'create'
         PAGE_ON = True
         self.buildWindow = QtWidgets.QWidget()
@@ -201,14 +235,19 @@ class Ui_MainWindow(QObject):
         self.ui.done.connect(LOCK2.unlock)
         self.ui.closed.connect(self.disableAdditionalPage)
         self.buildWindow.show()
-        self.refreshList()
         LOCK.unlock()
 
     def openEditWindow(self):
+        global MESSAGE, PAGE_ON, LOCK, LOCK2
+        MESSAGE = 'edit'
+        PAGE_ON = True
         self.editWindow = QtWidgets.QWidget()
         self.ui = ep()
         self.ui.setupUi(self.editWindow, self.drivesList.currentItem().text())
+        self.ui.add.connect(LOCK2.unlock)
+        self.ui.closed.connect(self.disableAdditionalPage)
         self.editWindow.show()
+        LOCK.unlock()
 
     def openLoginWindow(self):
         global MESSAGE, LOCK2, LOCK, PAGE_ON
@@ -224,7 +263,7 @@ class Ui_MainWindow(QObject):
 
     def refreshList(self):
         config = cp.ConfigParser()
-        config.read("mappedDrives.ini")
+        config.read(definitions.DRIVES_LIST_DIR)
         sections = config.sections()
         for s in sections:
             item = self.drivesList.findItems(s, Qt.Qt.MatchFlag.MatchRecursive)
@@ -237,9 +276,9 @@ class Ui_MainWindow(QObject):
     def enableEditBtn(self):
         self.editBtn.setEnabled(True)
 
-    @staticmethod
-    def disableAdditionalPage():
+    def disableAdditionalPage(self):
         global PAGE_ON, LOCK2
+        self.refreshList()
         LOCK2.unlock()
         PAGE_ON = False
 

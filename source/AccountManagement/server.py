@@ -2,6 +2,9 @@ import threading
 import socket
 import json
 
+import sys
+import ntpath
+
 IP = socket.gethostbyname(socket.gethostname())
 PORT = 20
 BUFFER = 1024
@@ -46,7 +49,8 @@ def sign_up(client_socket):
             DATA[username].update({
               'password': password,
               'devices': "('{0}',)".format(device_mac),
-              'methods': "Empty"
+              'methods': "{}",
+              'accounts': "[]"
             })
             with open('data.json', 'w') as f:
                 json.dump(DATA, f)
@@ -78,6 +82,30 @@ def login(client_socket):
                 client_socket.send('wrong'.encode())
 
 
+def edit(client_socket):
+    global DATA
+    while True:
+        edit_info = get_message(client_socket)
+        if edit_info == 'end':
+            break
+        if edit_info is not None:
+            method, cloud_username, credentials, drive_type, account_username, password, user_id = edit_info.split(',')
+            if account_username in DATA:
+                if DATA[account_username]['password'] == password:
+                    instruction = "{'" + method + "':('{0}', '{1}', '{2}', ['{3}'])".format(cloud_username, credentials,
+                                                                                   drive_type, user_id) + '}'
+                    DATA[account_username]['methods'] = str({**eval(DATA[account_username]['methods']), **eval(instruction)})
+                    account = "('{0}', '{1}', '{2}')".format(cloud_username, credentials, drive_type)
+                    list = eval(DATA[account_username]['accounts'])
+                    list.append(eval(account))
+                    DATA[account_username]['accounts'] = str(list)
+                    with open('data.json', 'w+') as f:
+                        json.dump(DATA, f)
+                client_socket.send('success'.encode())
+                print('success')
+                break
+
+
 def communicate(client_socket, client_address):
     global DATA, BUFFER
     ip, port = client_address
@@ -97,9 +125,16 @@ def communicate(client_socket, client_address):
             elif message == 'login':
                 ack(client_socket)
                 login(client_socket)
+            elif message == 'edit':
+                ack(client_socket)
+                edit(client_socket)
     except Exception as e:
         client_socket.close()
-        print("Client crashed, ip: ", ip, " port: ", port, ", Error:")
+        tb = sys.exc_info()[2]
+        f = tb.tb_frame
+        line = tb.tb_lineno
+        filename = ntpath.split(f.f_code.co_filename)[1]
+        print("Client crashed, ip: ", ip, " port: ", port, ", Exception in {0} line {1}:".format(filename, line))
         print(e)
 
 
