@@ -133,18 +133,19 @@ class Ui_Form(QObject):
         username, password = self.usernameEdit.toPlainText(), self.passwordEdit.text()
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':
-            MESSAGE = '{0},{1},{2}'.format(username, hashlib.sha224(password.encode()).hexdigest(),
-                                           definitions.MAC_ADDRESS)
+            hashed_password = hashlib.sha224(password.encode()).hexdigest()
+            MESSAGE = '{0},{1},{2}'.format(username, hashed_password, definitions.MAC_ADDRESS)
             ARGS = '{0},{1},{2}'.format(letter, dr, name)
 
             config = cp.ConfigParser()
-            config.read('mappedDrives.ini')
+            config.read(definitions.DRIVES_LIST_DIR)
             sections = config.sections()
             if username not in sections:
                 # MappedDrive(letter, dr, name)
                 config.add_section(username)
                 config.set(username, 'disk', letter + name)
-                with open("mappedDrives.ini", "w+") as f:
+                config.set(username, 'password', hashed_password)
+                with open(definitions.DRIVES_LIST_DIR, "w+") as f:
                     config.write(f)
             print('emited done')
             self.done.emit()
