@@ -7,7 +7,6 @@ import definitions
 
 FORM = None
 MESSAGE = None
-ARGS = None
 
 
 class Ui_Form(QObject):
@@ -129,13 +128,11 @@ class Ui_Form(QObject):
         self.directoryEdit.setPlainText(folder_dir)
 
     def login(self):
-        global MESSAGE, ARGS
         username, password = self.usernameEdit.toPlainText(), self.passwordEdit.text()
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':
             hashed_password = hashlib.sha224(password.encode()).hexdigest()
             MESSAGE = '{0},{1},{2}'.format(username, hashed_password, definitions.MAC_ADDRESS)
-            ARGS = '{0},{1},{2}'.format(letter, dr, name)
 
             config = cp.ConfigParser()
             config.read(definitions.DRIVES_LIST_DIR)
@@ -188,16 +185,6 @@ class Ui_Form(QObject):
         button = box.button(QMessageBox.Ok)
         button.setText('Close')
         box.exec_()
-
-
-def get_args():
-    global ARGS
-    return ARGS
-
-
-def set_args(new_args):
-    global ARGS
-    ARGS = new_args
 
 
 def get_message():

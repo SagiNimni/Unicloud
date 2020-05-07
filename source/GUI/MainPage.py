@@ -12,8 +12,9 @@ from GUI.BuildPage import Ui_Form as bp
 from GUI.EditPage import Ui_Form as ep
 from GUI.LoginPage import Ui_Form as lp
 from GUI.BuildPage import get_message, set_message
-from GUI.LoginPage import get_message as b_get_message, set_message as b_set_message, get_args, set_args
+from GUI.LoginPage import get_message as b_get_message, set_message as b_set_message
 from WindowsManagement.VirtualDisk import MappedDrive
+from BuildDiskDrive import buildSkeleton
 import configparser as cp
 import socket
 import definitions
@@ -110,7 +111,8 @@ class ConnectAndLoginThread(QThread):
                 if MESSAGE is not None:
                     print("sent " + MESSAGE)
                     self.client.send(MESSAGE.encode())
-                    item = self.ui.drivesList.findItems(MESSAGE.split(',')[0], Qt.Qt.MatchFlag.MatchRecursive)
+                    unicloud_username = MESSAGE.split(',')[0]
+                    item = self.ui.drivesList.findItems(unicloud_username, Qt.Qt.MatchFlag.MatchRecursive)
                     MESSAGE = None
                     b_set_message(None)
                     if not item:
@@ -120,11 +122,15 @@ class ConnectAndLoginThread(QThread):
                                 print('wrong')
                                 break
                             else:
-                                letter, dr, name = get_args().split(',')
-                                # MappedDrive(letter, dr, name)
+                                print(response)
+                                config = cp.ConfigParser()
+                                config.read(definitions.DRIVES_LIST_DIR)
+                                for account in eval(response):
+                                    username, password, drive_type, folder_name = account
+                                    account_dir = config.get(username, 'disk').split(':')[0] + '/' + folder_name
+                                    buildSkeleton.establishUnicloudConnectionToFolder(account_dir, username, password, drive_type)
                                 print("success")
                                 break
-                        set_args(None)
                         print("exit login loop")
                         break
                     else:

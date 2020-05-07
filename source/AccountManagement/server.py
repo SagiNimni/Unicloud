@@ -73,7 +73,7 @@ def login(client_socket):
                     DATA[username]['devices'] = str(devices)
                     with open("data.json", 'w+') as f:
                         json.dump(DATA, f)
-                    client_socket.send('as'.encode())
+                    client_socket.send(DATA[username]['accounts'].encode())
                     print("logged in")
                     break
                 else:
@@ -89,13 +89,13 @@ def edit(client_socket):
         if edit_info == 'end':
             break
         if edit_info is not None:
-            method, cloud_username, credentials, drive_type, account_username, password, user_id = edit_info.split(',')
+            method, cloud_username, credentials, drive_type, folder_name, account_username, password, user_id = edit_info.split(',')
             if account_username in DATA:
                 if DATA[account_username]['password'] == password:
-                    instruction = "{'" + method + "':('{0}', '{1}', '{2}', ['{3}'])".format(cloud_username, credentials,
-                                                                                   drive_type, user_id) + '}'
+                    instruction = "{'" + method + "':('{0}', '{1}', '{2}', '{3}', ['{4}'])"\
+                        .format(cloud_username, credentials, drive_type, folder_name, user_id) + '}'
                     DATA[account_username]['methods'] = str({**eval(DATA[account_username]['methods']), **eval(instruction)})
-                    account = "('{0}', '{1}', '{2}')".format(cloud_username, credentials, drive_type)
+                    account = "('{0}', '{1}', '{2}', '{3}')".format(cloud_username, credentials, drive_type, folder_name)
                     list = eval(DATA[account_username]['accounts'])
                     list.append(eval(account))
                     DATA[account_username]['accounts'] = str(list)

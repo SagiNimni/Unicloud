@@ -169,7 +169,7 @@ class Ui_Form(QObject):
             cloud_type = self.typeEdit.currentText().replace(' ', '')
             credentials = self.credantialsEdit.text()
             username = self.usernameEdit.toPlainText()
-            self.MESSAGE = 'add,' + username + ',' + credentials + ',' + cloud_type
+            self.MESSAGE = 'add,' + username + ',' + credentials + ',' + cloud_type + ',' + self.nameEdit.toPlainText()
             buildSkeleton.establishUnicloudConnectionToFolder(account_directory, username, credentials, cloud_type)
         except BlankSpaceError:
             box = QMessageBox()
