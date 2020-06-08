@@ -4,6 +4,7 @@ conf_path = os.getcwd()
 sys.path.append(conf_path)
 sys.path.append(conf_path + r'\scripts\Setup')
 
+from Crypto.Cipher import AES
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QThread, QObject, QMutexLocker, QMutex
@@ -13,7 +14,6 @@ from GUI.EditPage import Ui_Form as ep
 from GUI.LoginPage import Ui_Form as lp
 from GUI.BuildPage import get_message, set_message
 from GUI.LoginPage import get_message as b_get_message, set_message as b_set_message
-from WindowsManagement.VirtualDisk import MappedDrive
 from BuildDiskDrive import buildSkeleton
 import configparser as cp
 import socket
@@ -38,6 +38,9 @@ class ConnectAndLoginThread(QThread):
         self.ui = ui
 
     def run(self):
+        """
+        start the thread of the client and waits for the users requests
+        """
         global HOST_PORT, HOST_IP, BUFFER, MESSAGE, LOCK
         self.client.connect((HOST_IP, HOST_PORT))
         print("Connected to server")
@@ -78,6 +81,10 @@ class ConnectAndLoginThread(QThread):
                 self.close()
 
     def sign_up(self):
+        """
+        starts the sign up function loop until a success
+        or abort
+        """
         global MESSAGE, LOCK2, PAGE_ON, BUFFER
         while True:
             with QMutexLocker(LOCK2):
@@ -97,9 +104,14 @@ class ConnectAndLoginThread(QThread):
                     print("exit create loop")
                     break
         self.client.send('end'.encode())
+        self.ui.refreshList()
         LOCK2.lock()
 
     def login(self):
+        """
+        starts the login function loop until a success
+        or abort
+        """
         global MESSAGE, LOCK2, BUFFER, PAGE_ON
         while True:
             with QMutexLocker(LOCK2):
@@ -120,6 +132,15 @@ class ConnectAndLoginThread(QThread):
                             response = self.client.recv(BUFFER).decode()
                             if response == 'wrong':
                                 print('wrong')
+                                box = QMessageBox()
+                                box.setIcon(QMessageBox.Warning)
+                                box.setWindowTitle('Wrong Details')
+                                box.setText('The username or password are wrong')
+                                box.setStandardButtons(QMessageBox.Ok)
+                                box.setDefaultButton(QMessageBox.Ok)
+                                button = box.button(QMessageBox.Ok)
+                                button.setText('Close')
+                                box.exec_()
                                 break
                             else:
                                 print(response)
@@ -137,9 +158,14 @@ class ConnectAndLoginThread(QThread):
                         print('already exists')
                         break
         self.client.send('end'.encode())
+        self.ui.refreshList()
         LOCK2.lock()
 
     def edit(self):
+        """
+          starts the edit function loop until a success
+          or abort
+          """
         global BUFFER, MESSAGE, LOCK2, BUFFER, PAGE_ON
         while True:
             with QMutexLocker(LOCK2):
@@ -147,18 +173,22 @@ class ConnectAndLoginThread(QThread):
                 if not PAGE_ON:
                     print("force exist")
                     break
-                MESSAGE = self.ui.ui.MESSAGE2 + ',' + definitions.MAC_ADDRESS
-                if MESSAGE is not None:
-                    print('sent ' + MESSAGE)
-                    self.client.send(MESSAGE.encode())
-                    MESSAGE = None
-                    while True:
-                        response = self.client.recv(BUFFER).decode()
-                        if response == 'success':
-                            break
+                if self.ui.ui.MESSAGE2:
+                    for i in range(len(self.ui.ui.MESSAGE2)):
+                        MESSAGE = self.ui.ui.MESSAGE2[i] + ',' + definitions.MAC_ADDRESS
+                        print('sent ' + MESSAGE)
+                        self.client.send(MESSAGE.encode())
+                        MESSAGE = None
+                        while True:
+                            response = self.client.recv(BUFFER).decode()
+                            if response == 'success':
+                                if i < len(self.ui.ui.MESSAGE2) - 1:
+                                    self.client.send('again'.encode())
+                                else:
+                                    self.client.send('end'.encode())
+                                break
                     print('exit edit loop')
                     break
-        self.client.send('end'.encode())
         LOCK2.lock()
 
     def close(self):

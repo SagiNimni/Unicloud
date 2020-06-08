@@ -83,8 +83,9 @@ def login(client_socket):
 
 
 def edit(client_socket):
-    global DATA
-    while True:
+    global DATA, BUFFER
+    pending = True
+    while pending:
         edit_info = get_message(client_socket)
         if edit_info == 'end':
             break
@@ -103,7 +104,12 @@ def edit(client_socket):
                         json.dump(DATA, f)
                 client_socket.send('success'.encode())
                 print('success')
-                break
+                while True:
+                    response = client_socket.recv(BUFFER).decode()
+                    if response == 'again':
+                        pass
+                    elif response == 'end':
+                        break
 
 
 def communicate(client_socket, client_address):

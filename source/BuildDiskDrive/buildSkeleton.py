@@ -6,6 +6,15 @@ from definitions import SCRIPTS_DIR, CONFIG_DIR
 
 
 def establishUnicloudConnectionToFolder(directory, username, credentials, cloud_type):
+    """
+    This function builds the cloud files skeleton in the collaborated disk
+    In addition it creates a file that saves the account's data
+
+    :param directory: The directory of the cloud's folder
+    :param username: The username of the cloud account
+    :param credentials: The credentials of the cloud account
+    :param cloud_type: The cloud type of the account
+    """
     os.mkdir(directory)
     config = cp.ConfigParser()
     config.add_section("accountSettings")

@@ -87,6 +87,10 @@ class MappedDrive:
         key.Close()
 
     def _add_directory_context_menu_(self, menu_icon=CONFIG_DIR + '\\cloud.ico'):
+        """
+        Add context menu to the folder in file explorer only in the disk - with the windows registry
+        :param menu_icon: The path of the icon of the context menu
+        """
         # create context menu with sub commands
         subkey_path = r'Directory\Shell\Unicloud'
         key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, subkey_path, 0, winreg.KEY_SET_VALUE)
@@ -110,6 +114,10 @@ class MappedDrive:
                          'refresh.ico')
 
     def _add_file_context_menu(self, menu_icon=CONFIG_DIR + '\\cloud.ico'):
+        """
+        Add context menu to the files in the file explorer only in the disk - with the windows registry
+        :param menu_icon: The path of the icon of the context menu
+        """
         subkey_path = r'*\shell\Unicloud'
         key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, subkey_path, 0, winreg.KEY_SET_VALUE)
         winreg.SetValueEx(key, 'AppliesTo', 0, winreg.REG_SZ, self.letter)

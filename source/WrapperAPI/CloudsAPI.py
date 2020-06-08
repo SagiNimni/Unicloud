@@ -141,8 +141,11 @@ class GoogleDriveCloud:
     CHUNK_SIZE = 4 * 1024 * 1024
 
     def __init__(self, credentials: str):
-        """Shows basic usage of the Drive v3 API.
-        Prints the names and ids of the first 10 files the user has access to.
+        """
+        This function gives you access to Google Drive API and to other methods in this class
+        The access that is granted is stored in the "self.service" variable
+
+        :param credentials: the licence of your Google Drive account
         """
         path = credentials.rsplit("/", 1)[0]
         creds = None
@@ -192,6 +195,14 @@ class GoogleDriveCloud:
         return all_results
 
     def _create_folder_(self, name, path="/"):
+        """
+        Creates a new folder in the cloud account
+        warning: can't create two identical folder in the same path. if you do
+                an error will occur
+
+        :param name: The name of the new folder
+        :param path: The path in the cloud of the new folder
+        """
         try:
             next(item for item in self.folders_metadata if item['name'] == name)
         except StopIteration:
@@ -207,6 +218,13 @@ class GoogleDriveCloud:
         raise NameError('The name "{0}" is already used by another folder'.format(name))
 
     def get_files_metadata(self, path=None):
+        """
+        process all cloud to retrieve all files metadata.
+        The metadata is name, id and parent folder
+
+        :param path: The path to start the process from, if "None" than all cloud is processed
+        :return: A list of the wanted files from the specified path
+        """
         files_list = []
         results = self._drive_v3_api_()
         items = results.get('files', [])
@@ -229,6 +247,12 @@ class GoogleDriveCloud:
         return files_list
 
     def get_files_names(self, path=None):
+        """
+        Get all the files' names from the cloud
+
+        :param path: The path to start the process from, if "None" than all cloud is processed
+        :return: A list of the names from the specified path
+        """
         metadata = self.get_files_metadata(path + "/")
         remote_files = {}
         for file in metadata:
@@ -240,6 +264,13 @@ class GoogleDriveCloud:
         return remote_files
 
     def get_file_path(self, file_name, parent_id=None):
+        """
+        Get the path of the file in the cloud with it's name
+
+        :param file_name: The name of wanted file
+        :param parent_id: The id of the parent folder of the file
+        :return: A string of the path
+        """
         tree = []
         if parent_id:
             while True:
@@ -256,6 +287,14 @@ class GoogleDriveCloud:
         return path
 
     def upload_file(self, directory, session: bool, path=""):
+        """
+        Upload a file from the computer to the cloud
+
+        :param directory: The directory in the PC of the file that you want to upload to the cloud- string
+        :param session: Determine wheter or not the upload will be in session (with chunks). usually sessions
+                        should be used for large files.
+        :param path: The remote path in the cloud to upload to file.
+        """
         head, tail = ntpath.split(directory)
         name, extension = tail.split('.')
         if session:
@@ -294,6 +333,12 @@ class GoogleDriveCloud:
                 print('File ID %s' % file.get('id'))
 
     def upload_folder(self, directory, path="/"):
+        """
+        Upload a folder full of files to the cloud
+
+        :param directory: The directory in the PC of the folder
+        :param path: The cloud's remote path to upload the folder.
+        """
         __count__ = len(directory.split('/')) - 2
         self._create_folder_(directory.split('/')[__count__], '/' + path[:-1])
         path = path + directory.split('/')[__count__]
@@ -310,6 +355,12 @@ class GoogleDriveCloud:
                 self.upload_folder(file_directory, directory)
 
     def download_file(self, path, directory):
+        """
+        Download a file from the cloud to the PC
+
+        :param path: the path of the file in the cloud
+        :param directory: the diretory to download the file
+        """
         head, tail = ntpath.split(path)
         if head != '':
             files = self.get_files_metadata(head + '/')
@@ -361,6 +412,13 @@ class MegaUploadCloud:
     MEGA_BASH_DIRECTORY = MEGA_BASH_DIR + "\\"
 
     def __init__(self, email, password):
+        """
+        The funtion will login with the email and password to your Mega Upload
+        account and give you access to use it's API.
+
+        :param email: The email or username of your account
+        :param password: The password of your account
+        """
         subprocess.call(self.MEGA_BASH_DIRECTORY + 'mega-logout.bat', stdout=subprocess.DEVNULL)
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-login.bat', email, password]
         status = subprocess.call(cmd_line, stdout=subprocess.DEVNULL)
@@ -374,6 +432,12 @@ class MegaUploadCloud:
             raise Exception("An unknown error occurred while trying to log in, error status: {0}".format(status))
 
     def _create_folder_(self, name, path=None):
+        """
+        Creates new folder on the cloud
+
+        :param name: The new folder's name
+        :param path: The new folder's path in the cloud
+        """
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-cd.bat']
         if path is not None:
             cmd_line.append(path)
@@ -386,6 +450,13 @@ class MegaUploadCloud:
             raise IsADirectoryError('The name "{0}" is already used by another folder'.format(name))
 
     def get_files_names(self, path=None, mute=True):
+        """
+        Get list of the file names of the cloud
+
+        :param path: The path of the folder to get the names from
+        :param mute: mute output from this function - boolean
+        :return: List of file names
+        """
         if mute:
             utility.block_print()
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-ls.bat']
@@ -407,6 +478,12 @@ class MegaUploadCloud:
         return remote_files
 
     def upload(self, local_path, remote_path=None):
+        """
+        Upload from PC to the cloud
+
+        :param local_path: the directory of the file in the PC
+        :param remote_path: The path in the cloud to upload
+        """
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-put.bat', local_path]
         if remote_path is not None:
             remote_path = remote_path.replace('\\', "/")
@@ -418,6 +495,13 @@ class MegaUploadCloud:
             raise NotADirectoryError('The directory "{0}" does not exist'.format(local_path))
 
     def download(self, remote_path, local_path):
+        """
+        Download file from cloud to PC
+
+        :param remote_path: path in the cloud
+        :param local_path:  directory in PC
+        :return:
+        """
         cmd_line = [self.MEGA_BASH_DIRECTORY + 'mega-get.bat', remote_path, local_path]
         status = subprocess.call(cmd_line)
         if status == 0:

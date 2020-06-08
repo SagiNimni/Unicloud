@@ -128,6 +128,7 @@ class Ui_Form(QObject):
         self.directoryEdit.setPlainText(folder_dir)
 
     def login(self):
+        global MESSAGE
         username, password = self.usernameEdit.toPlainText(), self.passwordEdit.text()
         letter, dr, name = self.letterBox.currentText(), self.directoryEdit.toPlainText(), self.nameEdit.toPlainText()
         if dr != '' and name != '' and username != '' and password != '':

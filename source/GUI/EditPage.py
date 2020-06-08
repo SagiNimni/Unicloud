@@ -15,7 +15,7 @@ class Ui_Form(QObject):
     remove = pyqtSignal()
     closed = pyqtSignal()
 
-    MESSAGE2 = None
+    MESSAGE2 = []
     FORM = None
 
     def setupUi(self, Form, username):
@@ -91,9 +91,9 @@ class Ui_Form(QObject):
         drive_type, username, path = self.accountList.currentItem().text().split('   ')
         shutil.rmtree(path, ignore_errors=False, onerror=handle_remove_readonly)
         config = cp.ConfigParser()
-        config.read('mappedDrives.ini')
-        section = self.currentDrive[0] + self.currentDrive[1]
-        with open("mappedDrives.ini", 'w+') as f:
+        config.read(definitions.DRIVES_LIST_DIR)
+        section = self.currentDrive[1]
+        with open(definitions.DRIVES_LIST_DIR, 'w+') as f:
             try:
                 for key, value in config.items(section, raw=True):
                     path_check, _ = ntpath.split(value)
@@ -107,16 +107,18 @@ class Ui_Form(QObject):
                 config.write(f)
                 f.close()
 
+                self.MESSAGE2.append('remove,' + drive_type + ',' + username + ',' + self.username + ',' + self.password)
                 list_items = self.accountList.selectedItems()
                 for item in list_items:
                     self.accountList.takeItem(self.accountList.row(item))
+                self.remove.emit()
             except Exception as e:
                 print(e)
 
     def refreshList(self):
         config = cp.ConfigParser()
-        config.read("mappedDrives.ini")
-        section = self.currentDrive[0] + self.currentDrive[1]
+        config.read(definitions.DRIVES_LIST_DIR)
+        section = self.currentDrive[1]
         for i in range(1, 10):
             try:
                 path = config[section]["account" + str(i)]
@@ -136,7 +138,7 @@ class Ui_Form(QObject):
                 break
 
     def accountAdded(self):
-        self.MESSAGE2 = self.ui.MESSAGE + ',' + self.username + ',' + self.password
+        self.MESSAGE2.append(self.ui.MESSAGE + ',' + self.username + ',' + self.password)
         self.add.emit()
         FORM.close()
 

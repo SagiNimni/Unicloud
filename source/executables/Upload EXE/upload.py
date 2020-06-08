@@ -7,6 +7,12 @@ from tkinter import messagebox
 
 
 def main(directory):
+    """
+    This code is converted to exe file that uploads file from the
+    file explorer to the cloud
+
+    :param directory: The directory of the file that is uploaded
+    """
     path, name = ntpath.split(directory)
     account_path = directory.split('\\')[0] + "\\" + directory.split('\\')[1] + "\\account.ini"
     config = cp.ConfigParser()

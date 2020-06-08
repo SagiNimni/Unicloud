@@ -47,7 +47,7 @@ class Ui_Form(QObject):
         self.browseBtn.setObjectName("browseBtn")
         self.credantialsEdit = QtWidgets.QLineEdit(Form)
         self.credantialsEdit.setEnabled(True)
-        self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.PasswordEchoOnEdit)
         self.credantialsEdit.setGeometry(QtCore.QRect(130, 230, 201, 31))
         self.credantialsEdit.setObjectName("credantialsEdit")
         self.credantialsLbl = QtWidgets.QLabel(Form)
@@ -134,23 +134,30 @@ class Ui_Form(QObject):
         if previous_type == "Mega Upload":
             self.passwordLbl.close()
             if current_type == "Google Drive":
+                self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
                 self.credantialsLbl.show()
                 self.browseBtn.show()
             elif current_type == "Dropbox":
+                self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
                 self.tokenLbl.show()
         elif previous_type == "Google Drive":
+            self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
             self.browseBtn.close()
             self.credantialsLbl.close()
             if current_type == "Mega Upload":
+                self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Password)
                 self.passwordLbl.show()
             elif current_type == "Dropbox":
+                self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
                 self.tokenLbl.show()
         elif previous_type == "Dropbox":
             self.tokenLbl.close()
             if current_type == "Google Drive":
+                self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
                 self.credantialsLbl.show()
                 self.browseBtn.show()
             elif current_type == "Mega Upload":
+                self.credantialsEdit.setEchoMode(QtWidgets.QLineEdit.Password)
                 self.passwordLbl.show()
 
     def browseForPath(self):
