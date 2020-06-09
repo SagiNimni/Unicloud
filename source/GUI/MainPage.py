@@ -131,16 +131,12 @@ class ConnectAndLoginThread(QThread):
                         while True:
                             response = self.client.recv(BUFFER).decode()
                             if response == 'wrong':
+                                config = cp.ConfigParser()
+                                config.read(definitions.DRIVES_LIST_DIR)
+                                config.remove_section(unicloud_username)
+                                with open(definitions.DRIVES_LIST_DIR, 'w+') as f:
+                                    config.write(f)
                                 print('wrong')
-                                box = QMessageBox()
-                                box.setIcon(QMessageBox.Warning)
-                                box.setWindowTitle('Wrong Details')
-                                box.setText('The username or password are wrong')
-                                box.setStandardButtons(QMessageBox.Ok)
-                                box.setDefaultButton(QMessageBox.Ok)
-                                button = box.button(QMessageBox.Ok)
-                                button.setText('Close')
-                                box.exec_()
                                 break
                             else:
                                 print(response)
@@ -148,7 +144,7 @@ class ConnectAndLoginThread(QThread):
                                 config.read(definitions.DRIVES_LIST_DIR)
                                 for account in eval(response):
                                     username, password, drive_type, folder_name = account
-                                    account_dir = config.get(username, 'disk').split(':')[0] + '/' + folder_name
+                                    account_dir = config.get(unicloud_username, 'disk').split(':')[0] + ':/' + folder_name
                                     buildSkeleton.establishUnicloudConnectionToFolder(account_dir, username, password, drive_type)
                                 print("success")
                                 break
