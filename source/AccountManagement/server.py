@@ -93,9 +93,10 @@ def edit(client_socket):
             method, cloud_username, credentials, drive_type, folder_name, account_username, password, user_id = edit_info.split(',')
             if account_username in DATA:
                 if DATA[account_username]['password'] == password:
-                    instruction = "{'" + method + "':('{0}', '{1}', '{2}', '{3}', ['{4}'])"\
-                        .format(cloud_username, credentials, drive_type, folder_name, user_id) + '}'
-                    DATA[account_username]['methods'] = str({**eval(DATA[account_username]['methods']), **eval(instruction)})
+                    if len(eval(DATA[account_username]['devices'])) > 1:
+                        instruction = "{'" + method + "':('{0}', '{1}', '{2}', '{3}', ['{4}'])"\
+                            .format(cloud_username, credentials, drive_type, folder_name, user_id) + '}'
+                        DATA[account_username]['methods'] = str({**eval(DATA[account_username]['methods']), **eval(instruction)})
                     account = "('{0}', '{1}', '{2}', '{3}')".format(cloud_username, credentials, drive_type, folder_name)
                     list = eval(DATA[account_username]['accounts'])
                     list.append(eval(account))
@@ -110,6 +111,7 @@ def edit(client_socket):
                         pass
                     elif response == 'end':
                         break
+                break
 
 
 def communicate(client_socket, client_address):

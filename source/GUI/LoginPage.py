@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QMessageBox
+from WindowsManagement.VirtualDisk import MappedDrive
 import configparser as cp
 import hashlib
 import definitions

@@ -19,7 +19,7 @@ import configparser as cp
 import socket
 import definitions
 
-HOST_IP = socket.gethostbyname(socket.gethostname())
+HOST_IP = "10.100.102.10"
 HOST_PORT = 20
 BUFFER = 1024
 MESSAGE = None
@@ -167,6 +167,7 @@ class ConnectAndLoginThread(QThread):
             with QMutexLocker(LOCK2):
                 print("add lock realese")
                 if not PAGE_ON:
+                    self.client.send('end'.encode())
                     print("force exist")
                     break
                 if self.ui.ui.MESSAGE2:
